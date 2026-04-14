@@ -1,0 +1,34 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Local ML model cache (downloaded on first depth estimation run)
+node_modules/.transformers-cache
+
+# Source photos (originals from camera, ~13 MB each) — kept locally, not
+# committed. Processed versions in public/photos/hero/ are the ones used.
+public/photos/gallery/*
+!public/photos/gallery/.gitkeep
+public/photos/raw/*
+!public/photos/raw/.gitkeep
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
