@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import { ShaderMaterial, Vector2, LinearFilter, type Mesh } from 'three'
+import type { IntroPhase } from '../../lib/introMachine'
 
 /**
  * Hero scene — two-layer parallax.
@@ -92,6 +93,12 @@ interface HeroSceneProps {
   thresholdLow?: number
   /** Depth values above this are fully opaque (foreground/couple). */
   thresholdHigh?: number
+  /** Camera Z position at top of page. */
+  cameraZFar?: number
+  /** Camera Z position at end of hero viewport (scroll push-in). */
+  cameraZNear?: number
+  /** Current intro phase — gates layer opacity to avoid showing hero during waiting/dragging. */
+  phase?: IntroPhase
 }
 
 export function HeroScene({
@@ -104,11 +111,16 @@ export function HeroScene({
   // at 0.2 keeps the falloff short (avoiding visible halo).
   thresholdLow = 0.1,
   thresholdHigh = 0.2,
+  /** Camera Z at top of page (far). */
+  cameraZFar = 5,
+  /** Camera Z at bottom of hero viewport (zoomed in). */
+  cameraZNear = 4.3,
+  phase = 'done',
 }: HeroSceneProps) {
   const fgMeshRef = useRef<Mesh>(null)
   const fgMatRef = useRef<ShaderMaterial>(null)
   const bgMatRef = useRef<ShaderMaterial>(null)
-  const { viewport, size } = useThree()
+  const { viewport, size, camera } = useThree()
 
   const targetMouse = useRef(new Vector2(0, 0))
   const currentMouse = useRef(new Vector2(0, 0))
@@ -133,12 +145,27 @@ export function HeroScene({
     return () => window.removeEventListener('mousemove', handleMove)
   }, [])
 
+  // Hero is rendered at full opacity in every phase. The lockscreen darken +
+  // canvas blur (Scene.tsx) handle the visual gating during waiting/dragging.
+  // The dive itself is the camera Z lerp — no layer fade needed.
+  useEffect(() => {
+    if (fgMatRef.current) fgMatRef.current.uniforms.uOpacity.value = 1
+    if (bgMatRef.current) bgMatRef.current.uniforms.uOpacity.value = 1
+  }, [phase])
+
+  // Mouse parallax is enabled only after dive completes. During waiting/
+  // dragging/diving the foreground stays centered (still image), so the user
+  // sees a clean fly-through with no movement competing with the camera.
+  const parallaxActive = phase === 'done' || phase === 'skipped'
+
   useFrame(() => {
-    // Lerp mouse for smooth motion
-    currentMouse.current.x +=
-      (targetMouse.current.x - currentMouse.current.x) * damping
-    currentMouse.current.y +=
-      (targetMouse.current.y - currentMouse.current.y) * damping
+    // Lerp mouse for smooth motion (always running; targets are zero when
+    // parallax disabled so currentMouse decays back to center smoothly when
+    // phase transitions to 'done').
+    const targetX = parallaxActive ? targetMouse.current.x : 0
+    const targetY = parallaxActive ? targetMouse.current.y : 0
+    currentMouse.current.x += (targetX - currentMouse.current.x) * damping
+    currentMouse.current.y += (targetY - currentMouse.current.y) * damping
 
     // Translate foreground mesh — couple silhouettes slide over fixed background
     if (fgMeshRef.current) {
@@ -148,19 +175,27 @@ export function HeroScene({
         currentMouse.current.y * parallax * viewport.height
     }
 
-    // Scroll-based opacity fade — both layers fade together so the content
-    // sections below visually "cover" the hero smoothly.
-    const scrolled = window.scrollY
-    const vh = window.innerHeight
-    const fadeStart = vh * 0.3
-    const fadeEnd = vh * 1.0
-    const t = Math.max(
-      0,
-      Math.min(1, (scrolled - fadeStart) / (fadeEnd - fadeStart))
-    )
-    const opacity = 1 - t
-    if (fgMatRef.current) fgMatRef.current.uniforms.uOpacity.value = opacity
-    if (bgMatRef.current) bgMatRef.current.uniforms.uOpacity.value = opacity
+    // Scroll-driven behavior only after dive completes. During the intro the
+    // camera Z is owned by Scene.tsx's CameraDive component.
+    if (parallaxActive) {
+      const scrolled = window.scrollY
+      const vh = window.innerHeight
+      const scrollProgress = Math.max(0, Math.min(1, scrolled / vh))
+
+      const targetZ =
+        cameraZFar + (cameraZNear - cameraZFar) * scrollProgress
+      camera.position.z += (targetZ - camera.position.z) * 0.1
+
+      const fadeStart = vh * 0.3
+      const fadeEnd = vh * 1.0
+      const t = Math.max(
+        0,
+        Math.min(1, (scrolled - fadeStart) / (fadeEnd - fadeStart))
+      )
+      const opacity = 1 - t
+      if (fgMatRef.current) fgMatRef.current.uniforms.uOpacity.value = opacity
+      if (bgMatRef.current) bgMatRef.current.uniforms.uOpacity.value = opacity
+    }
   })
 
   const planeScale = 1.1

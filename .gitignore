@@ -22,6 +22,9 @@ public/photos/gallery/*
 public/photos/raw/*
 !public/photos/raw/.gitkeep
 
+# Visual companion mockups (brainstorming)
+.superpowers/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
