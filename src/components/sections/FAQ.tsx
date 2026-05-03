@@ -86,7 +86,7 @@ function FAQItem({
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="w-full flex items-center justify-between py-2 text-left font-display text-lg md:text-xl text-ink"
+        className="w-full flex items-center justify-between py-2 text-left text-lg md:text-xl text-ink"
         style={{ filter: `url(#${filterId})` }}
       >
         <span>{q}</span>

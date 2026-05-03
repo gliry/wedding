@@ -52,11 +52,11 @@ export function WhenWhere() {
       </h2>
       <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 mb-8 text-base md:text-lg">
         <dt className="font-medium text-ink-muted">Дата</dt>
-        <dd className="font-display">29 августа 2026 (суббота)</dd>
+        <dd>29 августа 2026 (суббота)</dd>
         <dt className="font-medium text-ink-muted">Сбор гостей</dt>
-        <dd className="font-display">15:30</dd>
+        <dd>15:30</dd>
         <dt className="font-medium text-ink-muted">Место</dt>
-        <dd className="font-display">Wolki & Lipki Country Club<br />ул. А. Невского, 2а, Ижевск</dd>
+        <dd>Wolki & Lipki Country Club<br />ул. А. Невского, 2а, Ижевск</dd>
       </dl>
 
       <div ref={mapWrapRef} className="relative mb-8 aspect-video rounded-md overflow-hidden bg-sage">

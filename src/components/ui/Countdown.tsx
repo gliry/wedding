@@ -42,8 +42,8 @@ export function Countdown({ variant = 'hero', className = '' }: CountdownProps) 
       ]
 
   const sizes = variant === 'hero'
-    ? { num: 'text-4xl md:text-5xl', label: 'text-[0.65rem]' }
-    : { num: 'text-3xl md:text-4xl', label: 'text-[0.6rem]' }
+    ? { num: 'text-4xl md:text-5xl', label: 'text-xs' }
+    : { num: 'text-2xl md:text-3xl', label: 'text-xs' }
 
   return (
     <div
@@ -60,12 +60,12 @@ export function Countdown({ variant = 'hero', className = '' }: CountdownProps) 
             ref={(el) => {
               cellRefs.current[cell.unit] = el
             }}
-            className={`font-display font-light leading-none text-bg ${sizes.num}`}
+            className={`font-numeric font-light leading-none text-current ${sizes.num}`}
           >
             {String(cell.value).padStart(2, '0')}
           </span>
           <span
-            className={`mt-1 font-sans uppercase tracking-[0.2em] text-bg/60 ${sizes.label}`}
+            className={`mt-1 font-numeric uppercase tracking-[0.2em] text-current opacity-60 ${sizes.label}`}
           >
             {cell.label}
           </span>

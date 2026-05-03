@@ -112,7 +112,7 @@ export function DressCode() {
       </div>
 
       <p className="font-display text-3xl text-olive mb-4">Никакого дресс-кода нет.</p>
-      <p className="font-display text-lg text-ink-muted">
+      <p className="text-lg text-ink-muted">
         Приходите в том, в чём вам комфортно. Без красного и белого.
       </p>
 

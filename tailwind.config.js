@@ -17,7 +17,7 @@ export default {
         taupe: '#A79177',        // warm taupe for tertiary accents
       },
       fontFamily: {
-        sans: ['"LT Remark"', 'Georgia', '"Times New Roman"', 'serif'],
+        sans: ['"LT Remark"'],
         display: ['"Florisel Script"', 'cursive'],
         script: ['"Florisel Script"', 'cursive'],
       },
