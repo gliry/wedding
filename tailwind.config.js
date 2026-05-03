@@ -17,9 +17,9 @@ export default {
         taupe: '#A79177',        // warm taupe for tertiary accents
       },
       fontFamily: {
-        sans: ['Sora', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['Sora', 'serif'],
-        script: ['"Gloria Script"', 'cursive'],
+        sans: ['"LT Remark"', 'Georgia', '"Times New Roman"', 'serif'],
+        display: ['"Florisel Script"', 'cursive'],
+        script: ['"Florisel Script"', 'cursive'],
       },
     },
   },

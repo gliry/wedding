@@ -1,13 +1,24 @@
+import './lib/gsap'
 import { SmoothScroll } from './components/providers/SmoothScroll'
 import { Scene } from './components/canvas/Scene'
 import { Hero } from './components/sections/Hero'
-import { Placeholder } from './components/sections/Placeholder'
+import { Address } from './components/sections/Address'
+import { WhenWhere } from './components/sections/WhenWhere'
+import { Schedule } from './components/sections/Schedule'
+import { DressCode } from './components/sections/DressCode'
+import { RSVP } from './components/sections/RSVP'
+import { FAQ } from './components/sections/FAQ'
+import { Contacts } from './components/sections/Contacts'
+import { Finale } from './components/sections/Finale'
+import { BotanicalVine } from './components/effects/BotanicalVine'
+import { FilmGrain } from './components/effects/FilmGrain'
 import { IntroLockscreen } from './components/intro/IntroLockscreen'
 import {
   IntroPhaseProvider,
   PreloadHeroTextures,
   useIntroPhase,
 } from './lib/useIntroPhase'
+import { usePaletteTint } from './lib/usePaletteTint'
 
 function App() {
   return (
@@ -24,32 +35,35 @@ function App() {
 function MainContent() {
   const { state } = useIntroPhase()
   if (state.phase !== 'done' && state.phase !== 'skipped') return null
+  return <ContentLayer />
+}
+
+function ContentLayer() {
+  usePaletteTint()
 
   return (
-    <main className="relative z-10">
-      <Hero />
-      <Placeholder
-        title="Когда и где"
-        description="Wolki & Lipki Country Club — ул. А. Невского, 2а, Ижевск"
-      />
-      <Placeholder
-        title="Программа дня"
-        description="15:30 — сбор гостей • выездная церемония • банкет • afterparty"
-      />
-      <Placeholder
-        title="Дресс-код"
-        description="Приходите в том, в чём вам комфортно. Без красного и белого."
-      />
-      <Placeholder title="Ваш ответ" description="RSVP через Яндекс.Форму" />
-      <Placeholder
-        title="Частые вопросы"
-        description="FAQ про дождь, парковку, жильё, детей"
-      />
-      <Placeholder
-        title="Контакты"
-        description="Telegram-группа, Дарина-координатор"
-      />
-    </main>
+    <>
+      <FilmGrain />
+      <main className="relative z-10">
+        <Hero />
+        <BotanicalVine variant={1} />
+        <Address />
+        <BotanicalVine variant={2} />
+        <WhenWhere />
+        <BotanicalVine variant={2} />
+        <Schedule />
+        <BotanicalVine variant={3} />
+        <DressCode />
+        <BotanicalVine variant={4} />
+        <RSVP />
+        <BotanicalVine variant={5} />
+        <FAQ />
+        <BotanicalVine variant={1} />
+        <Contacts />
+        <BotanicalVine variant={2} />
+        <Finale />
+      </main>
+    </>
   )
 }
 

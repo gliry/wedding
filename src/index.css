@@ -1,4 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap');
+/* Custom fonts: drop the .woff2/.ttf files into site-v2/public/fonts/.
+   Until they exist the @font-face rules silently fall through to the
+   system italic / cursive fallbacks declared in tailwind.config.js. */
+@font-face {
+  font-family: 'Florisel Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Floriselscript.ttf') format('truetype');
+}
 
 @font-face {
   font-family: 'Gloria Script';
@@ -6,6 +15,54 @@
   font-weight: 400;
   font-display: swap;
   src: url('/fonts/GloriaScript.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Czizh Wing';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Czizh%20Wing.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Zt Chablis';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ZtChablisRegular-51Y1L.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'LT Remark';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/LTRemarkItalic-May2021.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'LT Remark';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/LT%20Remark/LTRemark-May2021.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'LT Remark';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/LT%20Remark/LT-Remark-Bold3.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'LT Remark';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/LT%20Remark/LT-Remark-Bold-Italic.otf') format('opentype');
 }
 
 @tailwind base;
@@ -18,7 +75,8 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'LT Remark', Georgia, 'Times New Roman', serif;
+  font-style: italic;
   background: #f4eddf;
   color: #2b2719;
   -webkit-font-smoothing: antialiased;
@@ -50,4 +108,18 @@ html.lenis {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+@keyframes countdown-tick {
+  0%   { transform: translateY(-4px) scale(1.08); opacity: 0.5; }
+  60%  { transform: translateY(2px) scale(0.98); opacity: 1; }
+  100% { transform: translateY(0) scale(1);    opacity: 1; }
+}
+.countdown-tick {
+  animation: countdown-tick 400ms ease-out;
+  display: inline-block;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .countdown-tick { animation: none; }
 }

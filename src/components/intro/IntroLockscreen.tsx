@@ -15,9 +15,9 @@ import { useIntroPhase } from '../../lib/useIntroPhase'
  */
 export function IntroLockscreen() {
   const { state, dispatch } = useIntroPhase()
-  const overlayRef = useRef<HTMLDivElement>(null)
   const namesRef = useRef<HTMLDivElement>(null)
   const darkenLayerRef = useRef<HTMLDivElement>(null)
+  const thumbRef = useRef<HTMLDivElement>(null)
 
   // Bind darken to drag progress (cheap GPU update via inline style)
   useGSAP(
@@ -49,12 +49,14 @@ export function IntroLockscreen() {
     { dependencies: [state.phase] }
   )
 
-  // Fade out overlay during dive — canvas remains visible underneath
+  // Fade out only the thumb track during dive — names stay static so the
+  // transition into Hero (which renders identical names in the same spot)
+  // is seamless with no fade/blink on the headline text.
   useGSAP(
     () => {
       if (state.phase !== 'diving') return
-      if (!overlayRef.current) return
-      gsap.to(overlayRef.current, {
+      if (!thumbRef.current) return
+      gsap.to(thumbRef.current, {
         opacity: 0,
         duration: 0.5,
         delay: 0.1,
@@ -68,7 +70,6 @@ export function IntroLockscreen() {
 
   return (
     <div
-      ref={overlayRef}
       role="dialog"
       aria-modal="true"
       aria-label="Свадебный сайт — экран входа"
@@ -86,30 +87,41 @@ export function IntroLockscreen() {
       <div className="pointer-events-auto relative flex h-full flex-col items-center justify-between px-6 pb-8 pt-[20vh] text-center">
         <div ref={namesRef}>
           <h1
-            className="font-display font-light leading-[0.95] text-bg drop-shadow-2xl"
-            style={{ fontSize: 'clamp(2.5rem, 9vw, 5rem)' }}
+            className="font-script font-light leading-[1.25] text-bg"
+            style={{
+              fontSize: 'clamp(3.5rem, 12.6vw, 7rem)',
+              textShadow: `0 2px 8px rgba(0,0,0,${0.55 * state.progress}), 0 6px 24px rgba(0,0,0,${0.45 * state.progress}), 0 0 2px rgba(0,0,0,${0.6 * state.progress})`,
+            }}
           >
             <span className="block">Ильдар</span>
+            <span className="mt-2 block" aria-hidden>&amp;</span>
             <span className="mt-2 block">Екатерина</span>
           </h1>
-          <p className="mt-6 font-sans text-xs uppercase tracking-[0.3em] text-bg/70">
+          <p
+            className="mt-6 font-sans text-base md:text-lg uppercase tracking-[0.25em] text-bg"
+            style={{
+              textShadow: `0 2px 6px rgba(0,0,0,${0.7 * state.progress}), 0 4px 14px rgba(0,0,0,${0.45 * state.progress})`,
+            }}
+          >
             29 · 08 · 2026
           </p>
         </div>
 
-        <ThumbTrack
-          onDragStart={() => dispatch({ type: 'DRAG_START' })}
-          onDragProgress={(value) =>
-            dispatch({ type: 'DRAG_PROGRESS', value })
-          }
-          onComplete={(endpoint) =>
-            dispatch({
-              type: 'DRAG_END',
-              value: 1,
-              origin: endpoint,
-            })
-          }
-        />
+        <div ref={thumbRef}>
+          <ThumbTrack
+            onDragStart={() => dispatch({ type: 'DRAG_START' })}
+            onDragProgress={(value) =>
+              dispatch({ type: 'DRAG_PROGRESS', value })
+            }
+            onComplete={(endpoint) =>
+              dispatch({
+                type: 'DRAG_END',
+                value: 1,
+                origin: endpoint,
+              })
+            }
+          />
+        </div>
       </div>
     </div>
   )

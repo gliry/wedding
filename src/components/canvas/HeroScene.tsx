@@ -47,12 +47,14 @@ const BACKGROUND_FRAGMENT = /* glsl */ `
   uniform vec2 uResolution;
   uniform vec2 uImageResolution;
   uniform float uOpacity;
+  uniform float uZoom;
   varying vec2 vUv;
 
   ${COVER_FIT_HELPER}
 
   void main() {
     vec2 uv = coverUv(vUv, uResolution, uImageResolution);
+    uv = (uv - 0.5) / uZoom + 0.5;
     vec4 color = texture2D(uColor, uv);
     gl_FragColor = vec4(color.rgb, color.a * uOpacity);
   }
@@ -66,12 +68,14 @@ const FOREGROUND_FRAGMENT = /* glsl */ `
   uniform float uThresholdLow;
   uniform float uThresholdHigh;
   uniform float uOpacity;
+  uniform float uZoom;
   varying vec2 vUv;
 
   ${COVER_FIT_HELPER}
 
   void main() {
     vec2 uv = coverUv(vUv, uResolution, uImageResolution);
+    uv = (uv - 0.5) / uZoom + 0.5;
     vec4 color = texture2D(uColor, uv);
 
     // Pre-blurred depth map (Gaussian sigma 8) as alpha mask — soft edges
@@ -122,6 +126,12 @@ export function HeroScene({
   const bgMatRef = useRef<ShaderMaterial>(null)
   const { viewport, size, camera } = useThree()
 
+  const planeScale = 1.3
+  // Negative = composition shifts left so the couple sits closer to centre.
+  const subjectOffsetX = -0.1
+  // <1 = zoom out (subject smaller, more frame visible). 1 = native cover-fit.
+  const subjectZoom = 1.0
+
   const targetMouse = useRef(new Vector2(0, 0))
   const currentMouse = useRef(new Vector2(0, 0))
 
@@ -136,14 +146,18 @@ export function HeroScene({
     tex.magFilter = LinearFilter
   }
 
+  // Track mouse only when parallax is active. Otherwise the slider release
+  // would leave a stale targetMouse value, causing a 1-frame slide of the
+  // foreground plane the moment phase becomes 'done'.
   useEffect(() => {
+    if (phase !== 'done' && phase !== 'skipped') return
     const handleMove = (e: MouseEvent) => {
       targetMouse.current.x = (e.clientX / window.innerWidth) * 2 - 1
       targetMouse.current.y = -((e.clientY / window.innerHeight) * 2 - 1)
     }
     window.addEventListener('mousemove', handleMove, { passive: true })
     return () => window.removeEventListener('mousemove', handleMove)
-  }, [])
+  }, [phase])
 
   // Hero is rendered at full opacity in every phase. The lockscreen darken +
   // canvas blur (Scene.tsx) handle the visual gating during waiting/dragging.
@@ -151,6 +165,16 @@ export function HeroScene({
   useEffect(() => {
     if (fgMatRef.current) fgMatRef.current.uniforms.uOpacity.value = 1
     if (bgMatRef.current) bgMatRef.current.uniforms.uOpacity.value = 1
+  }, [phase])
+
+  // Reset mouse target when entering done/skipped — cursor was on the slider
+  // (bottom-right), so without this reset parallax would lerp toward that
+  // stale position before the user moves the mouse on Hero.
+  useEffect(() => {
+    if (phase === 'done' || phase === 'skipped') {
+      targetMouse.current.set(0, 0)
+      currentMouse.current.set(0, 0)
+    }
   }, [phase])
 
   // Mouse parallax is enabled only after dive completes. During waiting/
@@ -170,6 +194,7 @@ export function HeroScene({
     // Translate foreground mesh — couple silhouettes slide over fixed background
     if (fgMeshRef.current) {
       fgMeshRef.current.position.x =
+        subjectOffsetX * viewport.width +
         currentMouse.current.x * parallax * viewport.width
       fgMeshRef.current.position.y =
         currentMouse.current.y * parallax * viewport.height
@@ -198,13 +223,11 @@ export function HeroScene({
     }
   })
 
-  const planeScale = 1.1
-
   return (
     <>
-      {/* Background plane — fixed, never moves */}
+      {/* Background plane — fixed, shifted by subjectOffsetX */}
       <mesh
-        position={[0, 0, -0.5]}
+        position={[subjectOffsetX * viewport.width, 0, -0.5]}
         scale={[viewport.width * planeScale, viewport.height * planeScale, 1]}
       >
         <planeGeometry args={[1, 1]} />
@@ -218,6 +241,7 @@ export function HeroScene({
             uResolution: { value: new Vector2(size.width, size.height) },
             uImageResolution: { value: new Vector2(2000, 1334) },
             uOpacity: { value: 1 },
+            uZoom: { value: subjectZoom },
           }}
         />
       </mesh>
@@ -242,6 +266,7 @@ export function HeroScene({
             uThresholdLow: { value: thresholdLow },
             uThresholdHigh: { value: thresholdHigh },
             uOpacity: { value: 1 },
+            uZoom: { value: subjectZoom },
           }}
         />
       </mesh>

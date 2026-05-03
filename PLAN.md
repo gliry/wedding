@@ -184,25 +184,32 @@ Tailwind config маппит их как `bg-bg`, `text-ink`, `text-sage` etc.
 
 **Time estimate:** ~4-6 часов
 
-### Phase 4 — Envelope intro scene 📋 PLANNED
+### Phase 4 — Intro lockscreen reveal ✅ DONE (2026-04-26)
 
-**Goal:** cinematic entry sequence — конверт открывается → камера пролетает внутрь → emerge в hero scene.
+**Goal:** cinematic entry sequence — slide-to-unlock жест над B&W размытым фото → grayscale→color bloom → hero.
 
-**Sub-steps:**
+**Decision (2026-04-26):** abandoned envelope metaphor in favor of slide-to-unlock lockscreen (option B+E from brainstorm). Rationale: tactile + cinematic, exploits depth-parallax stack, less clichéd for weddings. Then dropped camera dive in favor of grayscale→color reveal: photo стартует blurred B&W, blur уходит с drag, на release цвет «расцветает» с warm overshoot. No camera movement — фото статично, трансформация чисто saturation+brightness.
 
-- [ ] 4.1 — Brainstorm: что внутри envelope сцены — композиция, lighting, camera path
-- [ ] 4.2 — `components/canvas/EnvelopeScene.tsx` — procedural SVG envelope + CSS 3D или Three.js primitives
-- [ ] 4.3 — GSAP master timeline: envelope fade-in → seal crack (DrawSVG) → flap rotate → letter emerge → camera push through
-- [ ] 4.4 — Transition в HeroScene (cross-fade через Canvas layers)
-- [ ] 4.5 — Skip pattern: localStorage flag — при повторных визитах сразу hero
-- [ ] 4.6 — Mobile adaptation: tap-to-open вместо auto-play
+**Implementation:**
 
-**Reference:**
-- Codrops «How to Build Cinematic 3D Scroll Experiences with GSAP» (Nov 2025) — scroll camera patterns
-- Noomo ValenTime — overall inspiration (camera flow через 3D пространство)
-- `three-story-controls` (NYT) — `ScrollControls` / `PathPointsControls` если решим использовать
+- [x] 4.1 — Brainstorm session с visual companion → spec + plan
+- [x] 4.2 — Pure reducer state machine (`waiting/dragging/diving/done/skipped`) at `src/lib/introMachine.ts` with full Vitest coverage (11 tests)
+- [x] 4.3 — `useIntroPhase` provider + `PreloadHeroTextures` helper at `src/lib/useIntroPhase.tsx`
+- [x] 4.4 — `ThumbTrack` reusable controlled slider with Pointer Events + GSAP snap-back + keyboard a11y
+- [x] 4.5 — `IntroLockscreen` DOM overlay: darken layer + names + thumb (no `<img>` — canvas is single image source)
+- [x] 4.6 — `Scene.tsx` rewrite: CSS filter on canvas wrapper drives blur+grayscale+brightness across phases; GSAP timeline для color reveal with warm overshoot
+- [x] 4.7 — `HeroScene` accepts `phase` prop, mouse parallax gated to `done`/`skipped` only
+- [x] 4.8 — Removed: `EnvelopeScene.tsx`, `IntroHint.tsx`, `IntroContext.tsx`, `RippleOverlay.tsx`, ripple shaders
+- [x] 4.9 — No localStorage skip — lockscreen plays on every visit. Только `prefers-reduced-motion: reduce` short-circuits to `done`
+- [x] 4.10 — Removed all postprocessing (Bloom/Vignette/Noise) — добавляли «светлый фильтр» поверх фото
 
-**Time estimate:** ~3-4 часа (+ brainstorm session перед стартом)
+**Files:**
+- Created: `src/components/intro/{IntroLockscreen,ThumbTrack}.tsx`, `src/lib/{introMachine.ts,introMachine.test.ts,useIntroPhase.tsx}`, `vitest.config.ts`
+- Modified: `src/App.tsx`, `src/components/canvas/{Scene,HeroScene}.tsx`, `src/components/sections/Hero.tsx`
+
+**Spec:** `projects/wedding/docs/superpowers/specs/2026-04-26-intro-lockscreen-reveal-design.md`
+**Plan:** `projects/wedding/docs/superpowers/plans/2026-04-26-intro-lockscreen-reveal.md`
+**Commit:** `8baac4f`
 
 ### Phase 5 — Sectional cinematic moments 📋 PLANNED
 
@@ -257,6 +264,12 @@ Tailwind config маппит их как `bg-bg`, `text-ink`, `text-sage` etc.
 | 2026-04-14 | No music | User decision («Music нет») |
 | 2026-04-14 | No per-guest personalization URLs | User decision («кастомные URL наверное не нужно») |
 | 2026-04-14 | Priority framing (C) balanced hybrid (implicit) | User proceeded without choosing, proceeded with (C) |
+| 2026-04-26 | Abandoned envelope intro for slide-to-unlock lockscreen | Tactile + cinematic, leverages depth-parallax stack, less clichéd for weddings |
+| 2026-04-26 | Camera dive removed entirely | "Zoom inward" felt off, produced visible blink at landing |
+| 2026-04-26 | Reveal = grayscale → color bloom (warm overshoot), не camera move | Single static frame transformation, no double-image blink |
+| 2026-04-26 | No localStorage skip — lockscreen plays on every visit | User decision: «пусть каждый раз срабатывает sliding» |
+| 2026-04-26 | Removed all postprocessing (Bloom/Vignette/Noise) | User feedback: «главная фотография в светлом фильтре, убери» |
+| 2026-04-26 | Storage key kept as `wedding:intro-seen`, `?replay` URL preserved (now no-op) | No churn on existing skip mechanism — just reduced to noop |
 
 ---
 
