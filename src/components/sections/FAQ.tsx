@@ -1,31 +1,27 @@
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
-import { useId, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 const ITEMS = [
   {
-    q: 'А если дождь?',
-    a: 'У нас есть план Б — церемонию перенесём в крытую часть площадки. Свадьба состоится в любую погоду.',
+    q: 'Будет ли трансфер?',
+    a: 'Загородный клуб находится в черте города, удобно добраться на такси.',
   },
   {
     q: 'Где оставить машину?',
-    a: 'На территории Wolki & Lipki есть бесплатная парковка. Можно оставить машину до утра — территория охраняется.',
-  },
-  {
-    q: 'Какую обувь надеть?',
-    a: 'Церемония пройдёт на газоне — рекомендуем танкетку или плоскую обувь. Шпильки утонут 🙂',
-  },
-  {
-    q: 'Можно ли с детьми?',
-    a: 'Конечно! Отметьте это в анкете — подготовим детский стол и уголок.',
+    a: 'На территории клуба есть парковка.',
   },
   {
     q: 'Где остановиться приезжим?',
-    a: 'На территории клуба есть отель. Также можем помочь с подбором — отметьте в анкете.',
+    a: 'На территории клуба есть отель с приятными номерами. Если возникнут сложности с размещением — напишите нам, поможем.',
+  },
+  {
+    q: 'Какую обувь надеть?',
+    a: 'Будем много танцевать, а часть территории — газон. К туфлям захватите что-нибудь удобное.',
   },
   {
     q: 'К кому обращаться в день свадьбы?',
-    a: 'К нашему координатору **Дарине** — не к жениху и невесте! У Дарины все ответы и контакты всех служб.',
+    a: 'К организаторам — молодожёны будут заняты свадебными хлопотами и не смогут оперативно отвечать.',
   },
 ]
 
@@ -34,13 +30,11 @@ function FAQItem({
   a,
   isOpen,
   onToggle,
-  filterId,
 }: {
   q: string
   a: string
   isOpen: boolean
   onToggle: () => void
-  filterId: string
 }) {
   const contentRef = useRef<HTMLDivElement>(null)
 
@@ -86,8 +80,7 @@ function FAQItem({
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="w-full flex items-center justify-between py-2 text-left text-lg md:text-xl text-ink"
-        style={{ filter: `url(#${filterId})` }}
+        className="w-full flex items-center justify-between py-2 text-left text-2xl md:text-3xl text-ink"
       >
         <span>{q}</span>
         <span
@@ -102,28 +95,26 @@ function FAQItem({
         ref={contentRef}
         style={{ height: 0, overflow: 'hidden', transformStyle: 'preserve-3d' }}
       >
-        <p className="py-2 text-ink text-base">{a}</p>
+        <p className="py-2 text-ink text-xl md:text-2xl">{a}</p>
       </div>
     </div>
   )
 }
 
 export function FAQ() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null)
-  const reactId = useId()
-  const filterId = `faq-ink-bleed-${reactId.replace(/:/g, '')}`
+  const [openSet, setOpenSet] = useState<Set<number>>(() => new Set())
+
+  function toggle(i: number) {
+    setOpenSet((prev) => {
+      const next = new Set(prev)
+      if (next.has(i)) next.delete(i)
+      else next.add(i)
+      return next
+    })
+  }
 
   return (
     <section className="px-6 py-24 max-w-2xl mx-auto">
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden>
-        <defs>
-          <filter id={filterId}>
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" />
-            <feDisplacementMap in="SourceGraphic" scale="1.5" />
-          </filter>
-        </defs>
-      </svg>
-
       <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8 text-center">
         Частые вопросы
       </h2>
@@ -133,9 +124,8 @@ export function FAQ() {
           key={i}
           q={item.q}
           a={item.a}
-          isOpen={openIdx === i}
-          onToggle={() => setOpenIdx(openIdx === i ? null : i)}
-          filterId={filterId}
+          isOpen={openSet.has(i)}
+          onToggle={() => toggle(i)}
         />
       ))}
     </section>

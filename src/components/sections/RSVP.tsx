@@ -9,9 +9,12 @@ const FORM_FALLBACK_URL =
 export function RSVP() {
   return (
     <section className="px-6 py-24 max-w-3xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8 text-center">
+      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-3 text-center">
         Ваш ответ
       </h2>
+      <p className="text-xl md:text-2xl text-ink-muted text-center mb-8">
+        Подтвердите своё участие до 1 августа
+      </p>
 
       <PaperCard className="p-2" tilt={false}>
         <iframe

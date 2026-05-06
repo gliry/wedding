@@ -1,11 +1,8 @@
-import { useRef, useState } from 'react'
-import { ColorSplash } from '../effects/ColorSplash'
-
-const STORAGE_KEY = 'wedding:dress-color'
+import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
 
 const MESSAGES = [
-  'Отличный выбор! Вам точно пойдёт 💕',
-  'Прекрасный цвет. Серьёзно.',
+  'Отличный выбор!',
+  'Прекрасный цвет.',
   'О, это очень вам к лицу!',
   'Бесподобно. Мы в восторге.',
   'Этот оттенок — просто 🔥',
@@ -23,7 +20,6 @@ const MESSAGES = [
   'Дизайнеры интерьеров рыдают от зависти.',
   'Это не цвет, это настроение.',
   'Смело. Уверенно. Неожиданно. Мы в восторге.',
-  'Декоратор уже думает, как вписать этот оттенок в букет.',
 ]
 
 const RED_WHITE_WARNING =
@@ -38,39 +34,43 @@ function isRedOrWhite(hex: string): boolean {
   return false
 }
 
-const RAINBOW_GRADIENT =
-  'conic-gradient(from 0deg, #ff0000, #ff8800, #ffee00, #33cc33, #00ccff, #3366ff, #9933ff, #ff3399, #ff0000)'
+function hslToHex(h: number, s: number, l: number): string {
+  const sN = s / 100
+  const lN = l / 100
+  const a = sN * Math.min(lN, 1 - lN)
+  const ch = (n: number) => {
+    const k = (n + h / 30) % 12
+    const c = lN - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)
+    return Math.round(255 * c)
+      .toString(16)
+      .padStart(2, '0')
+  }
+  return `#${ch(0)}${ch(8)}${ch(4)}`
+}
 
 export function DressCode() {
-  const initial = (typeof window !== 'undefined' && localStorage.getItem(STORAGE_KEY)) || '#8B9579'
-  const [color, setColor] = useState(initial)
-  const [hasInteracted, setHasInteracted] = useState(false)
+  const [color, setColor] = useState('')
   const [message, setMessage] = useState('')
-  const [splash, setSplash] = useState<{ color: string; origin: [number, number] } | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const wheelRef = useRef<HTMLSpanElement>(null)
+  const stripRef = useRef<HTMLDivElement>(null)
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const next = e.target.value
-    setColor(next)
-    setHasInteracted(true)
-    try {
-      localStorage.setItem(STORAGE_KEY, next)
-    } catch {
-      /* private mode */
-    }
-    if (isRedOrWhite(next)) {
+  function pickFromX(clientX: number) {
+    const el = stripRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
+    const hue = ratio * 360
+    const hex = hslToHex(hue, 80, 55)
+    setColor(hex)
+    if (isRedOrWhite(hex)) {
       setMessage(RED_WHITE_WARNING)
     } else {
       setMessage(MESSAGES[Math.floor(Math.random() * MESSAGES.length)])
     }
-    if (wheelRef.current) {
-      const rect = wheelRef.current.getBoundingClientRect()
-      setSplash({
-        color: next,
-        origin: [rect.left + rect.width / 2, rect.top + rect.height / 2],
-      })
-    }
+  }
+
+  function handleStripPointer(e: ReactPointerEvent<HTMLDivElement>) {
+    if (e.buttons === 0 && e.type !== 'pointerdown') return
+    pickFromX(e.clientX)
   }
 
   return (
@@ -79,49 +79,45 @@ export function DressCode() {
         Дресс-код
       </h2>
 
-      <div className="bg-bg-warm rounded-md border-2 border-dashed border-sage/40 p-8 mb-8">
-        <p className="mb-6 text-base">
-          Наша <strong>«официальная палитра»</strong>. Нажмите на круг и выберите{' '}
-          <em>любой</em> цвет, <strong>все подходят</strong>:
-        </p>
-
-        {message && (
-          <p className="mb-4 font-display text-xl text-olive min-h-[1.7em]" aria-live="polite">
-            {message}
-          </p>
-        )}
-
-        <label className="relative block mx-auto w-40 h-40 cursor-pointer rounded-full transition-transform duration-200 hover:scale-105 active:scale-95">
-          <span
-            ref={wheelRef}
-            className="absolute inset-0 rounded-full border-4 border-bg-warm shadow-lg"
-            style={{
-              background: hasInteracted ? color : RAINBOW_GRADIENT,
-            }}
-            aria-hidden
-          />
-          <input
-            ref={inputRef}
-            type="color"
-            value={color}
-            onChange={handleChange}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            aria-label="Выбрать цвет наряда"
-          />
-        </label>
-      </div>
-
-      <p className="font-display text-3xl text-olive mb-4">Никакого дресс-кода нет.</p>
-      <p className="text-lg text-ink-muted">
-        Приходите в том, в чём вам комфортно. Без красного и белого.
+      <p className="text-xl md:text-2xl text-ink-muted leading-relaxed mb-10">
+        Никакого дресс-кода нет. Приходите в том, в чём вам комфортно.
+        Только не красный и не белый.
       </p>
 
-      {splash && (
-        <ColorSplash
-          color={splash.color}
-          origin={splash.origin}
-          onDone={() => setSplash(null)}
-        />
+      <div
+        className="relative mx-auto w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-sage/40"
+        style={color ? { backgroundColor: color } : undefined}
+      >
+        {!color && (
+          <span className="absolute inset-0 flex items-center justify-center text-ink text-lg md:text-xl leading-snug px-8 text-center pointer-events-none">
+            Выбери любой цвет из палитры ниже
+          </span>
+        )}
+      </div>
+
+      <div
+        ref={stripRef}
+        role="slider"
+        aria-label="Выбрать цвет"
+        aria-valuemin={0}
+        aria-valuemax={360}
+        tabIndex={0}
+        onPointerDown={handleStripPointer}
+        onPointerMove={handleStripPointer}
+        className="mx-auto h-10 w-full max-w-md rounded-full cursor-pointer border-2 border-bg-warm shadow-md touch-none"
+        style={{
+          background:
+            'linear-gradient(to right, hsl(0,80%,55%), hsl(60,80%,55%), hsl(120,80%,55%), hsl(180,80%,55%), hsl(240,80%,55%), hsl(300,80%,55%), hsl(360,80%,55%))',
+        }}
+      />
+
+      {message && (
+        <p
+          className="mt-6 text-xl md:text-2xl text-olive min-h-[1.7em]"
+          aria-live="polite"
+        >
+          {message}
+        </p>
       )}
     </section>
   )

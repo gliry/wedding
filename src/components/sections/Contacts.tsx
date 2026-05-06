@@ -40,7 +40,7 @@ export function Contacts() {
           >
             <span className="block text-3xl mb-2">💬</span>
             <strong className="block font-display text-lg mb-1">Telegram-группа свадьбы</strong>
-            <span className="block text-sm text-ink-muted">
+            <span className="block text-xl md:text-2xl text-ink-muted">
               Для всех гостей — новости, вопросы, координация
             </span>
           </a>
@@ -55,7 +55,7 @@ export function Contacts() {
           >
             <span className="block text-3xl mb-2">🎀</span>
             <strong className="block font-display text-lg mb-1">Дарина — координатор</strong>
-            <span className="block text-sm text-ink-muted">
+            <span className="block text-xl md:text-2xl text-ink-muted">
               Все вопросы в день свадьбы — к ней, не к паре!
             </span>
           </a>
@@ -64,7 +64,7 @@ export function Contacts() {
         <div className="block bg-bg-warm rounded-md border border-ink/10 p-6 text-center">
           <span className="block text-3xl mb-2">💕</span>
           <strong className="block font-display text-lg mb-1">Ильдар & Екатерина</strong>
-          <span className="block text-sm text-ink-muted">
+          <span className="block text-xl md:text-2xl text-ink-muted">
             Только для экстренных случаев
           </span>
         </div>

@@ -1,12 +1,10 @@
-import { Countdown } from '../ui/Countdown'
-
 export function Address() {
   return (
     <section className="px-6 py-24 max-w-2xl mx-auto text-center">
       <p className="font-display text-4xl md:text-5xl leading-snug text-ink mb-6">
         Дорогие гости!
       </p>
-      <p className="text-lg md:text-xl leading-relaxed text-ink-muted mb-10">
+      <p className="text-xl md:text-2xl leading-relaxed text-ink-muted mb-10">
         Приглашаем вас разделить радость этого особенного для нас события и стать частью начала нашей семейной истории!
       </p>
       <p className="font-script text-4xl md:text-5xl text-olive mb-4">
@@ -35,7 +33,6 @@ export function Address() {
         <span className="font-numeric text-2xl md:text-3xl text-ink-muted/70">30</span>
         <span className="font-numeric text-2xl md:text-3xl text-ink-muted/60">31</span>
       </div>
-      <Countdown variant="finale" className="text-ink" />
     </section>
   )
 }

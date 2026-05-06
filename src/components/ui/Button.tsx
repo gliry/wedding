@@ -25,7 +25,7 @@ type ButtonElProps = SharedProps &
 type ButtonProps = AnchorProps | ButtonElProps
 
 const BASE =
-  'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 min-h-[44px] font-sans text-sm font-medium transition-transform duration-150 active:scale-95'
+  'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 min-h-[44px] font-sans text-xl md:text-2xl transition-transform duration-150 active:scale-95'
 const STYLES: Record<Variant, string> = {
   primary: 'bg-olive text-bg hover:-translate-y-0.5 shadow-md',
   secondary: 'bg-bg-warm text-ink hover:bg-bg-soft border border-ink/10',

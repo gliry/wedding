@@ -1,10 +1,8 @@
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Button } from '../ui/Button'
 
-const MAP_IFRAME_URL =
-  'https://yandex.ru/map-widget/v1/?ll=53.103278%2C56.863846&z=16&pt=53.103278%2C56.863846,pm2rdm'
 const ROUTE_URL =
   'https://yandex.ru/maps/?rtext=~56.863846%2C53.103278&rtt=auto'
 const GCAL_URL =
@@ -13,29 +11,24 @@ const ICS_URL = '/assets/invite.ics'
 
 export function WhenWhere() {
   const ref = useRef<HTMLElement>(null)
-  const mapWrapRef = useRef<HTMLDivElement>(null)
-  const [showIframe, setShowIframe] = useState(false)
+  const photoRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
-      if (!ref.current || !mapWrapRef.current) return
+      if (!ref.current || !photoRef.current) return
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      if (reduced) {
-        setShowIframe(true)
-        return
-      }
+      if (reduced) return
 
       gsap.fromTo(
-        mapWrapRef.current,
+        photoRef.current,
         { scale: 0.9, clipPath: 'circle(0% at 50% 50%)' },
         {
           scale: 1.0,
           clipPath: 'circle(100% at 50% 50%)',
           duration: 0.8,
           ease: 'power3.out',
-          onComplete: () => setShowIframe(true),
           scrollTrigger: {
-            trigger: mapWrapRef.current,
+            trigger: photoRef.current,
             start: 'top 70%',
             once: true,
           },
@@ -47,39 +40,25 @@ export function WhenWhere() {
 
   return (
     <section ref={ref} className="px-6 py-24 max-w-3xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8 text-center">
-        Когда и где
+      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-2 text-center">
+        Ждём вас в
       </h2>
-      <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 mb-8 text-base md:text-lg">
-        <dt className="font-medium text-ink-muted">Дата</dt>
-        <dd>29 августа 2026 (суббота)</dd>
-        <dt className="font-medium text-ink-muted">Сбор гостей</dt>
-        <dd>15:30</dd>
-        <dt className="font-medium text-ink-muted">Место</dt>
-        <dd>Wolki & Lipki Country Club<br />ул. А. Невского, 2а, Ижевск</dd>
-      </dl>
+      <p className="text-xl md:text-2xl text-ink-muted mb-8 text-center">
+        Загородном клубе WOLKI &amp; LIPKI
+      </p>
 
-      <div ref={mapWrapRef} className="relative mb-8 aspect-video rounded-md overflow-hidden bg-sage">
-        {showIframe ? (
-          <iframe
-            src={MAP_IFRAME_URL}
-            className="w-full h-full border-0"
-            title="Карта: Wolki & Lipki"
-            loading="lazy"
-            allowFullScreen
-          />
-        ) : (
-          <img
-            src="/photos/map-preview.jpg"
-            alt=""
-            aria-hidden
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).style.display = 'none'
-            }}
-          />
-        )}
+      <div ref={photoRef} className="relative mb-6 aspect-video rounded-md overflow-hidden bg-sage">
+        <img
+          src="/photos/wolki.webp"
+          alt="Wolki & Lipki Country Club"
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
+
+      <p className="text-center text-xl md:text-2xl text-ink-muted mb-8">
+        ул. А. Невского, 2а, Ижевск
+      </p>
 
       <div className="flex flex-col gap-3">
         <Button href={ROUTE_URL} target="_blank" rel="noopener" variant="primary" icon="🚗" className="w-full">
