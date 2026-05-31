@@ -1,82 +1,72 @@
-import { useRef, useState } from 'react'
-import { MagneticCard } from '../ui/MagneticCard'
-import { PaperPlane } from '../effects/PaperPlane'
-
 // TODO: replace with real Telegram URLs when available.
 const TG_GROUP_URL = 'https://t.me/PLACEHOLDER-WEDDING-GROUP'
 const TG_DARINA_URL = 'https://t.me/PLACEHOLDER-DARINA'
 
+type Contact = {
+  emoji: string
+  title: string
+  desc: string
+  href?: string
+}
+
+const CONTACTS: Contact[] = [
+  {
+    emoji: '💬',
+    title: 'Telegram-группа свадьбы',
+    desc: 'Для всех гостей — новости, вопросы, координация',
+    href: TG_GROUP_URL,
+  },
+  {
+    emoji: '🎀',
+    title: 'Дарина — координатор',
+    desc: 'Все вопросы в день свадьбы — к ней, не к паре',
+    href: TG_DARINA_URL,
+  },
+  {
+    emoji: '💕',
+    title: 'Ильдар & Екатерина',
+    desc: 'Только для экстренных случаев',
+  },
+]
+
 export function Contacts() {
-  const tgCardRef = useRef<HTMLAnchorElement>(null)
-  const [plane, setPlane] = useState<{ origin: [number, number]; key: number } | null>(null)
-  const [cooldown, setCooldown] = useState(false)
-
-  function fireTgPlane() {
-    if (cooldown || !tgCardRef.current) return
-    const rect = tgCardRef.current.getBoundingClientRect()
-    setPlane({
-      origin: [rect.left + rect.width / 2, rect.top + rect.height / 2],
-      key: Date.now(),
-    })
-    setCooldown(true)
-    setTimeout(() => setCooldown(false), 1500)
-  }
-
   return (
     <section className="px-6 py-24 max-w-3xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8 text-center">
+      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-10 text-center">
         Контакты
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-        <MagneticCard>
-          <a
-            ref={tgCardRef}
-            href={TG_GROUP_URL}
-            target="_blank"
-            rel="noopener"
-            onMouseEnter={fireTgPlane}
-            className="block bg-bg-warm rounded-md border border-ink/10 p-6 text-center transition-transform duration-150 hover:border-olive hover:-translate-y-0.5"
-          >
-            <span className="block text-3xl mb-2">💬</span>
-            <strong className="block font-display text-lg mb-1">Telegram-группа свадьбы</strong>
-            <span className="block text-xl md:text-2xl text-ink-muted">
-              Для всех гостей — новости, вопросы, координация
-            </span>
-          </a>
-        </MagneticCard>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {CONTACTS.map((c) => {
+          const inner = (
+            <>
+              <span className="text-3xl">{c.emoji}</span>
+              <span className="font-ui text-xl md:text-2xl text-ink">{c.title}</span>
+              <span className="font-ui text-base md:text-lg leading-relaxed text-ink-muted">
+                {c.desc}
+              </span>
+            </>
+          )
+          const base =
+            'flex h-full min-h-[200px] flex-col items-center justify-center gap-3 bg-bg-warm rounded-lg border border-ink/10 p-6 text-center'
 
-        <MagneticCard>
-          <a
-            href={TG_DARINA_URL}
-            target="_blank"
-            rel="noopener"
-            className="block bg-bg-warm rounded-md border border-ink/10 p-6 text-center transition-transform duration-150 hover:border-olive hover:-translate-y-0.5"
-          >
-            <span className="block text-3xl mb-2">🎀</span>
-            <strong className="block font-display text-lg mb-1">Дарина — координатор</strong>
-            <span className="block text-xl md:text-2xl text-ink-muted">
-              Все вопросы в день свадьбы — к ней, не к паре!
-            </span>
-          </a>
-        </MagneticCard>
-
-        <div className="block bg-bg-warm rounded-md border border-ink/10 p-6 text-center">
-          <span className="block text-3xl mb-2">💕</span>
-          <strong className="block font-display text-lg mb-1">Ильдар & Екатерина</strong>
-          <span className="block text-xl md:text-2xl text-ink-muted">
-            Только для экстренных случаев
-          </span>
-        </div>
+          return c.href ? (
+            <a
+              key={c.title}
+              href={c.href}
+              target="_blank"
+              rel="noopener"
+              className={`${base} transition duration-200 hover:border-olive/40 hover:shadow-sm`}
+            >
+              {inner}
+            </a>
+          ) : (
+            <div key={c.title} className={base}>
+              {inner}
+            </div>
+          )
+        })}
       </div>
-
-      {plane && (
-        <PaperPlane
-          key={plane.key}
-          origin={plane.origin}
-          onDone={() => setPlane(null)}
-        />
-      )}
     </section>
   )
 }

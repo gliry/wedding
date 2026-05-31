@@ -30,6 +30,9 @@ body {
   margin: 0;
   font-family: 'LT Remark';
   font-style: italic;
+  /* Keep real italic on LT Remark + faux-bold on <strong>, but disable
+     synthetic obliquing so emoji (no italic face) render upright. */
+  font-synthesis: weight;
   background: #f4eddf;
   color: #2b2719;
   -webkit-font-smoothing: antialiased;
@@ -61,6 +64,15 @@ html.lenis {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Upright, highly-legible face for dense UI (contact cards) where the
+   stylized LT Remark italic hurts readability. LT Remark has only an italic
+   face, so `not-italic` alone can't un-slant it — this swaps the family. */
+.font-ui {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-style: normal;
 }
 
 /* All numeric/tabular UI uses the same italic LT Remark; tabular-nums

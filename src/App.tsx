@@ -10,7 +10,6 @@ import { RSVP } from './components/sections/RSVP'
 import { FAQ } from './components/sections/FAQ'
 import { Contacts } from './components/sections/Contacts'
 import { Finale } from './components/sections/Finale'
-import { BotanicalVine } from './components/effects/BotanicalVine'
 import { FilmGrain } from './components/effects/FilmGrain'
 import { IntroLockscreen } from './components/intro/IntroLockscreen'
 import {
@@ -46,21 +45,13 @@ function ContentLayer() {
       <FilmGrain />
       <main className="relative z-10">
         <Hero />
-        <BotanicalVine variant={1} />
         <Address />
-        <BotanicalVine variant={2} />
         <WhenWhere />
-        <BotanicalVine variant={2} />
         <Schedule />
-        <BotanicalVine variant={3} />
         <DressCode />
-        <BotanicalVine variant={4} />
         <RSVP />
-        <BotanicalVine variant={5} />
         <FAQ />
-        <BotanicalVine variant={1} />
         <Contacts />
-        <BotanicalVine variant={2} />
         <Finale />
       </main>
     </>

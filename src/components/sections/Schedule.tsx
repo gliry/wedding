@@ -43,24 +43,31 @@ export function Schedule() {
   )
 
   return (
-    <section ref={ref} className="px-6 py-24 max-w-3xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-12 text-center">
-        Программа дня
-      </h2>
-      <ol className="relative pl-8 border-l-2 border-sage/40">
-        {ITEMS.map((item, i) => (
-          <li key={i} className="schedule-item relative mb-12 pl-6">
-            <span className="absolute -left-[1.4rem] top-4 w-3 h-3 rounded-full bg-olive" />
-            <p className="text-3xl md:text-4xl leading-none text-olive mb-2">
-              {item.time}
-            </p>
-            <h3 className="text-xl md:text-2xl text-ink mb-1">
-              {item.title}
-            </h3>
-            <p className="text-xl md:text-2xl text-ink-muted">{item.desc}</p>
-          </li>
-        ))}
-      </ol>
+    <section ref={ref} className="px-6 py-24 max-w-5xl mx-auto">
+      <div className="md:grid md:grid-cols-[2fr_3fr] md:gap-16">
+        {/* Left — large heading, pinned to the viewport while the list scrolls past */}
+        <div className="md:sticky md:top-0 md:h-screen md:flex md:flex-col md:justify-center">
+          <h2 className="font-display font-light text-ink leading-[0.95] text-4xl md:text-5xl text-center md:text-left mb-12 md:mb-0">
+            Программа
+            <br />
+            дня
+          </h2>
+        </div>
+
+        {/* Right — scrolling timeline */}
+        <ol className="relative pl-8 border-l-2 border-sage/40 md:py-[12vh]">
+          {ITEMS.map((item, i) => (
+            <li key={i} className="schedule-item relative mb-16 pl-6 last:mb-0">
+              <span className="absolute -left-[1.4rem] top-4 w-3 h-3 rounded-full bg-olive" />
+              <p className="text-3xl md:text-4xl leading-none text-olive mb-2">
+                {item.time}
+              </p>
+              <h3 className="text-xl md:text-2xl text-ink mb-1">{item.title}</h3>
+              <p className="text-xl md:text-2xl text-ink-muted">{item.desc}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   )
 }

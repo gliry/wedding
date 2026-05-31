@@ -48,6 +48,43 @@ function hslToHex(h: number, s: number, l: number): string {
   return `#${ch(0)}${ch(8)}${ch(4)}`
 }
 
+// White → red → green → blue → black, expressed as 5 (t, h, s, l) anchors
+// and lerped continuously. The CSS gradient below samples the same function
+// at fine intervals so the strip you see matches the colour the picker emits.
+type Anchor = readonly [t: number, h: number, s: number, l: number]
+const ANCHORS: readonly Anchor[] = [
+  [0.0,   0,   0, 100],
+  [0.08,  0,  80,  55],
+  [0.5,  120, 80,  55],
+  [0.92, 240, 80,  55],
+  [1.0,  240,  0,   0],
+]
+
+function colorFromRatio(t: number): string {
+  const clamped = Math.max(0, Math.min(1, t))
+  for (let i = 1; i < ANCHORS.length; i++) {
+    const [t2] = ANCHORS[i]
+    if (clamped <= t2) {
+      const [t1, h1, s1, l1] = ANCHORS[i - 1]
+      const [, h2, s2, l2] = ANCHORS[i]
+      const u = (clamped - t1) / (t2 - t1)
+      return hslToHex(h1 + (h2 - h1) * u, s1 + (s2 - s1) * u, l1 + (l2 - l1) * u)
+    }
+  }
+  const [, h, s, l] = ANCHORS[ANCHORS.length - 1]
+  return hslToHex(h, s, l)
+}
+
+const GRADIENT_CSS = (() => {
+  const STEPS = 24
+  const stops: string[] = []
+  for (let i = 0; i <= STEPS; i++) {
+    const t = i / STEPS
+    stops.push(`${colorFromRatio(t)} ${(t * 100).toFixed(2)}%`)
+  }
+  return `linear-gradient(to right, ${stops.join(', ')})`
+})()
+
 export function DressCode() {
   const [color, setColor] = useState('')
   const [message, setMessage] = useState('')
@@ -58,8 +95,7 @@ export function DressCode() {
     if (!el) return
     const rect = el.getBoundingClientRect()
     const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
-    const hue = ratio * 360
-    const hex = hslToHex(hue, 80, 55)
+    const hex = colorFromRatio(ratio)
     setColor(hex)
     if (isRedOrWhite(hex)) {
       setMessage(RED_WHITE_WARNING)
@@ -100,15 +136,12 @@ export function DressCode() {
         role="slider"
         aria-label="Выбрать цвет"
         aria-valuemin={0}
-        aria-valuemax={360}
+        aria-valuemax={100}
         tabIndex={0}
         onPointerDown={handleStripPointer}
         onPointerMove={handleStripPointer}
         className="mx-auto h-10 w-full max-w-md rounded-full cursor-pointer border-2 border-bg-warm shadow-md touch-none"
-        style={{
-          background:
-            'linear-gradient(to right, hsl(0,80%,55%), hsl(60,80%,55%), hsl(120,80%,55%), hsl(180,80%,55%), hsl(240,80%,55%), hsl(300,80%,55%), hsl(360,80%,55%))',
-        }}
+        style={{ background: GRADIENT_CSS }}
       />
 
       {message && (
