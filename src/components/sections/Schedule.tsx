@@ -5,9 +5,9 @@ import { SectionPhoto } from '../ui/SectionPhoto'
 
 const ITEMS = [
   { time: '15:30', title: 'Сбор гостей', desc: 'Фуршет, приветственные напитки' },
-  { time: '15:30', title: 'Выездная церемония', desc: 'На газоне — захватите удобную обувь' },
-  { time: '16:00', title: 'Фото с гостями', desc: 'Обнимашки, групповые кадры' },
-  { time: '16:30', title: 'Банкет', desc: 'Ужин, тосты, танцы' },
+  { time: '16:00', title: 'Выездная церемония', desc: 'На газоне — захватите удобную обувь' },
+  { time: '16:30', title: 'Фото с гостями', desc: 'Обнимашки, групповые кадры' },
+  { time: '17:00', title: 'Банкет', desc: 'Ужин, тосты, танцы' },
   { time: '23:00', title: 'Afterparty', desc: 'Бассейн, баня, отдых на территории' },
   { time: '30.08', title: 'Второй день', desc: 'Детали позже' },
 ]
@@ -44,28 +44,38 @@ export function Schedule() {
   )
 
   return (
-    <section ref={ref} className="px-6 py-24 max-w-5xl mx-auto">
+    <section
+      ref={ref}
+      className="relative z-10 -mt-10 rounded-t-[2.5rem] bg-bg pt-12 pb-16"
+    >
+      <div className="px-6 max-w-5xl mx-auto">
       <div className="md:grid md:grid-cols-[2fr_3fr] md:gap-16">
         {/* Left — large heading, pinned to the viewport while the list scrolls past */}
         <div className="md:sticky md:top-0 md:h-screen md:flex md:flex-col md:justify-center">
-          <h2 className="font-display font-light text-ink leading-[0.95] text-4xl md:text-5xl text-center md:text-left mb-10">
-            Программа
-            <br />
+          <h2 className="font-display font-light text-ink leading-[0.95] text-4xl md:text-5xl text-center mb-10">
+            Программа{' '}
+            <br className="hidden md:block" />
             дня
           </h2>
           <SectionPhoto
-            slug="img_2330"
+            slug="img_2304"
             alt="Ильдар и Екатерина"
-            className="mx-auto w-full max-w-[18rem] aspect-[3/4] rounded-t-full rounded-b-2xl shadow-sm mb-12 md:mb-0"
+            className="mx-auto w-full max-w-[18rem] aspect-[2/3] rounded-t-full rounded-b-2xl border-2 border-olive bg-sage-soft shadow-sm mb-12 md:mb-0"
+            imgClassName="object-contain scale-[0.82] origin-bottom"
             sizes="(max-width: 768px) 75vw, 28vw"
           />
         </div>
 
         {/* Right — scrolling timeline */}
-        <ol className="relative pl-8 border-l-2 border-sage/40 md:py-[12vh]">
+        <ol className="relative pl-8 md:border-l-2 md:border-sage/40 md:py-[12vh]">
           {ITEMS.map((item, i) => (
             <li key={i} className="schedule-item relative mb-16 pl-6 last:mb-0">
-              <span className="absolute -left-[1.4rem] top-4 w-3 h-3 rounded-full bg-olive" />
+              <span
+                className="font-ui absolute -left-7 top-1 text-xl leading-none text-olive"
+                aria-hidden
+              >
+                ✧
+              </span>
               <p className="text-3xl md:text-4xl leading-none text-olive mb-2">
                 {item.time}
               </p>
@@ -74,6 +84,7 @@ export function Schedule() {
             </li>
           ))}
         </ol>
+      </div>
       </div>
     </section>
   )

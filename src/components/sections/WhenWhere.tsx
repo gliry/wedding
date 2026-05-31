@@ -39,12 +39,12 @@ export function WhenWhere() {
   )
 
   return (
-    <section ref={ref} className="bg-sage-soft py-24">
+    <section ref={ref} className="bg-olive py-16">
       <div className="px-6 max-w-3xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-2 text-center">
+      <h2 className="font-display text-4xl md:text-5xl font-light text-bg-warm mb-2 text-center">
         Ждём вас в
       </h2>
-      <p className="text-xl md:text-2xl text-ink-muted mb-8 text-center">
+      <p className="text-xl md:text-2xl text-bg-warm/85 mb-8 text-center">
         Загородном клубе WOLKI &amp; LIPKI
       </p>
 
@@ -57,19 +57,19 @@ export function WhenWhere() {
         />
       </div>
 
-      <p className="text-center text-xl md:text-2xl text-ink-muted mb-8">
+      <p className="text-center text-xl md:text-2xl text-bg-warm/85 mb-8">
         ул. А. Невского, 2а, Ижевск
       </p>
 
       <div className="flex flex-col gap-3">
-        <Button href={ROUTE_URL} target="_blank" rel="noopener" variant="primary" icon="🚗" className="w-full">
+        <Button href={ROUTE_URL} target="_blank" rel="noopener" variant="primary" className="w-full !bg-bg-warm !text-olive hover:!bg-bg">
           Построить маршрут
         </Button>
-        <div className="flex gap-3">
-          <Button href={GCAL_URL} target="_blank" rel="noopener" variant="secondary" icon="📅" className="w-full flex-1">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button href={GCAL_URL} target="_blank" rel="noopener" variant="secondary" className="w-full sm:flex-1 !bg-transparent !text-bg-warm !border-bg-warm/40 hover:!bg-bg-warm/10">
             Google Календарь
           </Button>
-          <Button href={ICS_URL} variant="secondary" icon="🍎" className="w-full flex-1">
+          <Button href={ICS_URL} variant="secondary" className="w-full sm:flex-1 !bg-transparent !text-bg-warm !border-bg-warm/40 hover:!bg-bg-warm/10">
             Apple Календарь
           </Button>
         </div>

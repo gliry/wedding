@@ -1,5 +1,4 @@
 import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
-import { SectionPhoto } from '../ui/SectionPhoto'
 
 const MESSAGES = [
   'Отличный выбор!',
@@ -111,30 +110,23 @@ export function DressCode() {
   }
 
   return (
-    <section className="bg-sage-soft py-24">
+    <section className="bg-olive py-16">
       <div className="px-6 max-w-2xl mx-auto text-center">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8">
+      <h2 className="font-display text-4xl md:text-5xl font-light text-bg-warm mb-8">
         Дресс-код
       </h2>
 
-      <p className="text-xl md:text-2xl text-ink-muted leading-relaxed mb-10">
+      <p className="text-xl md:text-2xl text-bg-warm/85 leading-relaxed mb-10">
         Никакого дресс-кода нет. Приходите в том, в чём вам комфортно.
         Только не красный и не белый.
       </p>
 
-      <SectionPhoto
-        slug="img_2314"
-        alt="Ильдар и Екатерина"
-        className="mx-auto mb-10 w-full aspect-[4/3] rounded-2xl shadow-sm"
-        sizes="(max-width: 768px) 90vw, 42rem"
-      />
-
       <div
-        className="relative mx-auto w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-sage/40"
+        className="relative mx-auto w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-bg-warm/40"
         style={color ? { backgroundColor: color } : undefined}
       >
         {!color && (
-          <span className="absolute inset-0 flex items-center justify-center text-ink text-lg md:text-xl leading-snug px-8 text-center pointer-events-none">
+          <span className="absolute inset-0 flex items-center justify-center text-bg-warm text-lg md:text-xl leading-snug px-8 text-center pointer-events-none">
             Выбери любой цвет из палитры ниже
           </span>
         )}
@@ -155,7 +147,7 @@ export function DressCode() {
 
       {message && (
         <p
-          className="mt-6 text-xl md:text-2xl text-olive min-h-[1.7em]"
+          className="mt-6 text-xl md:text-2xl text-sage-soft min-h-[1.7em]"
           aria-live="polite"
         >
           {message}

@@ -7,7 +7,7 @@ const CAMERA_Z = 5
 
 // Mobile hero photo — a calm "standing together" frame that crops well in
 // portrait, unlike the landscape depth-parallax shot (couple walking apart).
-const MOBILE_HERO = 'img_2304'
+const MOBILE_HERO = 'img_2309'
 
 export function Scene() {
   const { state, dispatch } = useIntroPhase()

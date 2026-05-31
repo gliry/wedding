@@ -54,7 +54,7 @@ export function Finale() {
   )
 
   return (
-    <section ref={ref} className="relative overflow-hidden py-32 text-center">
+    <section ref={ref} className="relative overflow-hidden py-20 text-center">
       <SectionPhoto
         slug="img_2307"
         alt=""
@@ -98,17 +98,11 @@ export function Finale() {
 
         <h2
           ref={titleRef}
-          className="font-display font-light text-bg-warm mb-2"
+          className="text-bg-warm mb-10"
           style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)' }}
         >
           До встречи 29 августа 2026
         </h2>
-        <p className="font-script text-3xl text-sage-soft mb-8 leading-tight">
-          <span className="block">с любовью,</span>
-          <span className="block">Ильдар</span>
-          <span className="block" aria-hidden>&amp;</span>
-          <span className="block">Екатерина</span>
-        </p>
 
         <Countdown variant="finale" className="mb-8" />
 

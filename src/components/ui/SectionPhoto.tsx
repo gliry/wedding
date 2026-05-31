@@ -10,6 +10,8 @@ type SectionPhotoProps = {
   className?: string
   /** Responsive `sizes` attr; defaults to half-width on desktop. */
   sizes?: string
+  /** Extra classes on the <img> — e.g. `object-[center_25%]` to reframe. */
+  imgClassName?: string
   /** Subtle vertical scroll parallax inside the frame. Off by default —
    *  scrubbed transforms on large images compete with the WebGL hero loop
    *  and make scrolling janky. */
@@ -28,6 +30,7 @@ export function SectionPhoto({
   alt,
   className = '',
   sizes = '(max-width: 768px) 100vw, 45vw',
+  imgClassName = '',
   parallax = false,
 }: SectionPhotoProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -76,7 +79,7 @@ export function SectionPhoto({
           alt={alt}
           loading="lazy"
           decoding="async"
-          className={`h-full w-full object-cover ${parallax ? 'scale-[1.15] will-change-transform' : ''}`}
+          className={`h-full w-full object-cover ${imgClassName} ${parallax ? 'scale-[1.15] will-change-transform' : ''}`}
         />
       </picture>
     </div>

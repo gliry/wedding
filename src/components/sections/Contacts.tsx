@@ -31,7 +31,8 @@ const CONTACTS: Contact[] = [
 
 export function Contacts() {
   return (
-    <section className="px-6 py-24 max-w-3xl mx-auto">
+    <section className="bg-bg py-16">
+      <div className="px-6 max-w-3xl mx-auto">
       <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-10 text-center">
         Контакты
       </h2>
@@ -40,15 +41,14 @@ export function Contacts() {
         {CONTACTS.map((c) => {
           const inner = (
             <>
-              <span className="text-3xl">{c.emoji}</span>
-              <span className="font-ui text-xl md:text-2xl text-ink">{c.title}</span>
-              <span className="font-ui text-base md:text-lg leading-relaxed text-ink-muted">
+              <span className="text-2xl md:text-3xl text-ink">{c.title}</span>
+              <span className="text-xl md:text-2xl leading-relaxed text-ink-muted">
                 {c.desc}
               </span>
             </>
           )
           const base =
-            'flex h-full min-h-[200px] flex-col items-center justify-center gap-3 bg-bg-warm rounded-lg border border-ink/10 p-6 text-center'
+            'flex h-full min-h-[180px] flex-col items-center justify-center gap-3 bg-bg-warm rounded-lg border border-ink/10 p-6 text-center'
 
           return c.href ? (
             <a
@@ -66,6 +66,7 @@ export function Contacts() {
             </div>
           )
         })}
+      </div>
       </div>
     </section>
   )

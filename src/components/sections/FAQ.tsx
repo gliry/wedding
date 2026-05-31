@@ -75,16 +75,16 @@ function FAQItem({
   )
 
   return (
-    <div className="border-b border-ink/10 py-2">
+    <div className="border-b border-bg-warm/25 py-2">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="w-full flex items-center justify-between py-2 text-left text-2xl md:text-3xl text-ink"
+        className="w-full flex items-center justify-between py-2 text-left text-2xl md:text-3xl text-bg-warm"
       >
         <span>{q}</span>
         <span
-          className={`text-2xl text-olive transition-transform duration-200 ${
+          className={`text-2xl text-sage-soft transition-transform duration-200 ${
             isOpen ? 'rotate-45' : ''
           }`}
         >
@@ -95,7 +95,7 @@ function FAQItem({
         ref={contentRef}
         style={{ height: 0, overflow: 'hidden', transformStyle: 'preserve-3d' }}
       >
-        <p className="py-2 text-ink text-xl md:text-2xl">{a}</p>
+        <p className="py-2 text-bg-warm/85 text-xl md:text-2xl">{a}</p>
       </div>
     </div>
   )
@@ -114,9 +114,9 @@ export function FAQ() {
   }
 
   return (
-    <section className="bg-sage-soft py-24">
+    <section className="bg-olive py-16">
       <div className="px-6 max-w-2xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8 text-center">
+      <h2 className="font-display text-4xl md:text-5xl font-light text-bg-warm mb-8 text-center">
         Частые вопросы
       </h2>
 

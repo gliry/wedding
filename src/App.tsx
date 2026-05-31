@@ -10,6 +10,7 @@ import { RSVP } from './components/sections/RSVP'
 import { FAQ } from './components/sections/FAQ'
 import { Contacts } from './components/sections/Contacts'
 import { Finale } from './components/sections/Finale'
+import { PhotoBreak } from './components/sections/PhotoBreak'
 import { FilmGrain } from './components/effects/FilmGrain'
 import { IntroLockscreen } from './components/intro/IntroLockscreen'
 import {
@@ -45,19 +46,18 @@ function ContentLayer() {
       <FilmGrain />
       <main className="relative z-10">
         <Hero />
-        {/* Opaque backdrop so the fixed hero (WebGL / mobile photo) never shows
-            through transparent content sections while scrolling. Banded
-            sections (sage-soft, Finale) paint over this locally. */}
-        <div className="bg-bg">
-          <Address />
-          <WhenWhere />
-          <Schedule />
-          <DressCode />
-          <RSVP />
-          <FAQ />
-          <Contacts />
-          <Finale />
-        </div>
+        {/* Every section below is an opaque full-width band, so the fixed hero
+            never shows through. Bands alternate olive / sage-soft / cream and
+            are punctuated by full-bleed photo breaks for colour play. */}
+        <Address />
+        <WhenWhere />
+        <PhotoBreak slug="img_2318" />
+        <Schedule />
+        <DressCode />
+        <RSVP />
+        <FAQ />
+        <Contacts />
+        <Finale />
       </main>
     </>
   )

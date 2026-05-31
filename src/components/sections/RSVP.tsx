@@ -8,7 +8,8 @@ export function RSVP() {
   const [done, setDone] = useState<ThanksVariant | null>(null)
 
   return (
-    <section id="rsvp" className="px-6 py-24 max-w-2xl mx-auto">
+    <section id="rsvp" className="bg-bg py-16">
+      <div className="px-6 max-w-2xl mx-auto">
       <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-3 text-center">
         Ваш ответ
       </h2>
@@ -17,13 +18,14 @@ export function RSVP() {
       </p>
 
       <SectionPhoto
-        slug="img_2309"
+        slug="img_2330"
         alt="Ильдар и Екатерина"
-        className="mx-auto mb-12 w-full max-w-xs aspect-[3/4] rounded-t-full rounded-b-2xl shadow-sm"
+        className="mx-auto mb-12 w-full max-w-xs aspect-[3/4] rounded-t-full rounded-b-2xl border-2 border-olive shadow-sm"
         sizes="(max-width: 768px) 70vw, 20rem"
       />
 
       {done ? <Thanks variant={done} /> : <RSVPForm onSubmitted={setDone} />}
+      </div>
     </section>
   )
 }
