@@ -58,10 +58,10 @@ export function Schedule() {
             дня
           </h2>
           <SectionPhoto
-            slug="img_2304"
+            slug="img_2322"
             alt="Ильдар и Екатерина"
-            className="mx-auto w-full max-w-[18rem] aspect-[2/3] rounded-t-full rounded-b-2xl border-2 border-olive bg-sage-soft shadow-sm mb-12 md:mb-0"
-            imgClassName="object-contain scale-[0.82] origin-bottom"
+            className="mx-auto w-full max-w-[18rem] aspect-[2/3] rounded-t-full rounded-b-2xl border-2 border-olive shadow-sm mb-12 md:mb-0"
+            imgClassName="object-cover object-top"
             sizes="(max-width: 768px) 75vw, 28vw"
           />
         </div>

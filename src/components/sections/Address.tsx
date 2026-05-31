@@ -1,6 +1,6 @@
 export function Address() {
   return (
-    <section className="bg-olive py-16 text-center">
+    <section className="bg-olive pt-16 pb-6 text-center">
       <div className="px-6 max-w-2xl mx-auto text-bg-warm">
         <p className="font-display text-4xl md:text-5xl leading-snug mb-6">
           Дорогие гости!

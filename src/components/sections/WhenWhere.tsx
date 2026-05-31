@@ -39,7 +39,7 @@ export function WhenWhere() {
   )
 
   return (
-    <section ref={ref} className="bg-olive py-16">
+    <section ref={ref} className="bg-olive pt-6 pb-16">
       <div className="px-6 max-w-3xl mx-auto">
       <h2 className="font-display text-4xl md:text-5xl font-light text-bg-warm mb-2 text-center">
         Ждём вас в

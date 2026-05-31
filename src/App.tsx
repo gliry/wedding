@@ -51,7 +51,13 @@ function ContentLayer() {
             are punctuated by full-bleed photo breaks for colour play. */}
         <Address />
         <WhenWhere />
-        <PhotoBreak slug="img_2318" />
+        {/* Portrait photo break on mobile, landscape on desktop. */}
+        <div className="md:hidden">
+          <PhotoBreak slug="img_2324" />
+        </div>
+        <div className="hidden md:block">
+          <PhotoBreak slug="img_2318" />
+        </div>
         <Schedule />
         <DressCode />
         <RSVP />

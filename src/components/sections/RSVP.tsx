@@ -18,9 +18,10 @@ export function RSVP() {
       </p>
 
       <SectionPhoto
-        slug="img_2330"
+        slug="img_2305"
         alt="Ильдар и Екатерина"
-        className="mx-auto mb-12 w-full max-w-xs aspect-[3/4] rounded-t-full rounded-b-2xl border-2 border-olive shadow-sm"
+        className="mx-auto mb-12 w-full max-w-xs aspect-[2/3] rounded-t-full rounded-b-2xl border-2 border-olive shadow-sm"
+        imgClassName="object-cover object-top"
         sizes="(max-width: 768px) 70vw, 20rem"
       />
 

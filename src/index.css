@@ -33,7 +33,9 @@ body {
   /* Keep real italic on LT Remark + faux-bold on <strong>, but disable
      synthetic obliquing so emoji (no italic face) render upright. */
   font-synthesis: weight;
-  background: #f4eddf;
+  /* Olive base fill so sub-pixel seams between the olive blocks never flash
+     the cream page colour. Content sections paint their own bg over this. */
+  background: #5e6b4b;
   color: #2b2719;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;

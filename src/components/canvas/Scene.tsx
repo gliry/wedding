@@ -89,21 +89,16 @@ export function Scene() {
     >
       {isTouch ? (
         <picture>
-          <source
-            type="image/avif"
-            srcSet={`/photos/sections/${MOBILE_HERO}-md.avif 1200w, /photos/sections/${MOBILE_HERO}-lg.avif 1920w`}
-            sizes="100vw"
-          />
-          <source
-            type="image/webp"
-            srcSet={`/photos/sections/${MOBILE_HERO}-md.webp 1200w, /photos/sections/${MOBILE_HERO}-lg.webp 1920w`}
-            sizes="100vw"
-          />
+          {/* High-res (4000px) source — the landscape photo is cropped hard to
+              portrait, so it needs far more pixels than the viewport width to
+              stay sharp. */}
+          <source type="image/avif" srcSet={`/photos/sections/${MOBILE_HERO}-xl.avif`} />
+          <source type="image/webp" srcSet={`/photos/sections/${MOBILE_HERO}-xl.webp`} />
           <img
-            src={`/photos/sections/${MOBILE_HERO}-lg.jpg`}
+            src={`/photos/sections/${MOBILE_HERO}-xl.jpg`}
             alt=""
             aria-hidden
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-[58%_center]"
           />
         </picture>
       ) : (
