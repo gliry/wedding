@@ -183,6 +183,13 @@ export function HeroScene({
   const parallaxActive = phase === 'done' || phase === 'skipped'
 
   useFrame(() => {
+    // Portrait/mobile: zoom into the frame so the couple reads larger after
+    // the landscape photo is cover-cropped to a tall viewport. Both planes
+    // share the same zoom so foreground silhouettes stay aligned to the bg.
+    const portraitZoom = size.height > size.width ? 1.28 : subjectZoom
+    if (fgMatRef.current) fgMatRef.current.uniforms.uZoom.value = portraitZoom
+    if (bgMatRef.current) bgMatRef.current.uniforms.uZoom.value = portraitZoom
+
     // Lerp mouse for smooth motion (always running; targets are zero when
     // parallax disabled so currentMouse decays back to center smoothly when
     // phase transitions to 'done').

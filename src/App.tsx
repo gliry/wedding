@@ -45,14 +45,19 @@ function ContentLayer() {
       <FilmGrain />
       <main className="relative z-10">
         <Hero />
-        <Address />
-        <WhenWhere />
-        <Schedule />
-        <DressCode />
-        <RSVP />
-        <FAQ />
-        <Contacts />
-        <Finale />
+        {/* Opaque backdrop so the fixed hero (WebGL / mobile photo) never shows
+            through transparent content sections while scrolling. Banded
+            sections (sage-soft, Finale) paint over this locally. */}
+        <div className="bg-bg">
+          <Address />
+          <WhenWhere />
+          <Schedule />
+          <DressCode />
+          <RSVP />
+          <FAQ />
+          <Contacts />
+          <Finale />
+        </div>
       </main>
     </>
   )

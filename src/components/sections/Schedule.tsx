@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { useRef } from 'react'
+import { SectionPhoto } from '../ui/SectionPhoto'
 
 const ITEMS = [
   { time: '15:30', title: 'Сбор гостей', desc: 'Фуршет, приветственные напитки' },
@@ -47,11 +48,17 @@ export function Schedule() {
       <div className="md:grid md:grid-cols-[2fr_3fr] md:gap-16">
         {/* Left — large heading, pinned to the viewport while the list scrolls past */}
         <div className="md:sticky md:top-0 md:h-screen md:flex md:flex-col md:justify-center">
-          <h2 className="font-display font-light text-ink leading-[0.95] text-4xl md:text-5xl text-center md:text-left mb-12 md:mb-0">
+          <h2 className="font-display font-light text-ink leading-[0.95] text-4xl md:text-5xl text-center md:text-left mb-10">
             Программа
             <br />
             дня
           </h2>
+          <SectionPhoto
+            slug="img_2330"
+            alt="Ильдар и Екатерина"
+            className="mx-auto w-full max-w-[18rem] aspect-[3/4] rounded-t-full rounded-b-2xl shadow-sm mb-12 md:mb-0"
+            sizes="(max-width: 768px) 75vw, 28vw"
+          />
         </div>
 
         {/* Right — scrolling timeline */}

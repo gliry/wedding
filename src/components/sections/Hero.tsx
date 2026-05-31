@@ -1,6 +1,6 @@
 export function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-between px-6 pb-8 pt-[20vh] text-center">
+    <section className="relative flex min-h-[100svh] flex-col items-center justify-between px-6 pb-8 pt-[18vh] text-center">
       {/* Bottom gradient for text legibility over the bright sky/beach backdrop */}
       <div
         aria-hidden

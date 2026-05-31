@@ -39,7 +39,8 @@ export function WhenWhere() {
   )
 
   return (
-    <section ref={ref} className="px-6 py-24 max-w-3xl mx-auto">
+    <section ref={ref} className="bg-sage-soft py-24">
+      <div className="px-6 max-w-3xl mx-auto">
       <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-2 text-center">
         Ждём вас в
       </h2>
@@ -72,6 +73,7 @@ export function WhenWhere() {
             Apple Календарь
           </Button>
         </div>
+      </div>
       </div>
     </section>
   )

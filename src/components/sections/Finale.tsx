@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { useRef } from 'react'
 import { Countdown } from '../ui/Countdown'
+import { SectionPhoto } from '../ui/SectionPhoto'
 
 export function Finale() {
   const ref = useRef<HTMLElement>(null)
@@ -53,49 +54,66 @@ export function Finale() {
   )
 
   return (
-    <section ref={ref} className="px-6 py-24 max-w-3xl mx-auto text-center">
-      <svg
-        viewBox="0 0 280 160"
-        className="block mx-auto w-72 mb-8"
+    <section ref={ref} className="relative overflow-hidden py-32 text-center">
+      <SectionPhoto
+        slug="img_2307"
+        alt=""
+        className="absolute inset-0 h-full w-full"
+        sizes="100vw"
+      />
+      <div
+        className="absolute inset-0"
         aria-hidden
-      >
-        <circle
-          ref={ring1Ref}
-          cx="100"
-          cy="80"
-          r="60"
-          stroke="#A79177"
-          strokeWidth="3"
-          fill="none"
-        />
-        <circle
-          ref={ring2Ref}
-          cx="180"
-          cy="80"
-          r="60"
-          stroke="#A79177"
-          strokeWidth="3"
-          fill="none"
-        />
-      </svg>
+        style={{
+          background:
+            'linear-gradient(to top, rgba(28,25,16,0.82) 0%, rgba(28,25,16,0.55) 50%, rgba(28,25,16,0.45) 100%)',
+        }}
+      />
 
-      <h2
-        ref={titleRef}
-        className="font-display font-light text-ink mb-2"
-        style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)' }}
-      >
-        До встречи 29 августа 2026
-      </h2>
-      <p className="font-script text-3xl text-olive mb-8 leading-tight">
-        <span className="block">с любовью,</span>
-        <span className="block">Ильдар</span>
-        <span className="block" aria-hidden>&amp;</span>
-        <span className="block">Екатерина</span>
-      </p>
+      <div className="relative px-6 max-w-3xl mx-auto text-bg-warm">
+        <svg
+          viewBox="0 0 280 160"
+          className="block mx-auto w-72 mb-8"
+          aria-hidden
+        >
+          <circle
+            ref={ring1Ref}
+            cx="100"
+            cy="80"
+            r="60"
+            stroke="#DCE0D0"
+            strokeWidth="3"
+            fill="none"
+          />
+          <circle
+            ref={ring2Ref}
+            cx="180"
+            cy="80"
+            r="60"
+            stroke="#DCE0D0"
+            strokeWidth="3"
+            fill="none"
+          />
+        </svg>
 
-      <Countdown variant="finale" className="mb-8" />
+        <h2
+          ref={titleRef}
+          className="font-display font-light text-bg-warm mb-2"
+          style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)' }}
+        >
+          До встречи 29 августа 2026
+        </h2>
+        <p className="font-script text-3xl text-sage-soft mb-8 leading-tight">
+          <span className="block">с любовью,</span>
+          <span className="block">Ильдар</span>
+          <span className="block" aria-hidden>&amp;</span>
+          <span className="block">Екатерина</span>
+        </p>
 
-      <p className="text-2xl">💍</p>
+        <Countdown variant="finale" className="mb-8" />
+
+        <p className="text-2xl">💍</p>
+      </div>
     </section>
   )
 }

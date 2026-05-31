@@ -114,7 +114,8 @@ export function FAQ() {
   }
 
   return (
-    <section className="px-6 py-24 max-w-2xl mx-auto">
+    <section className="bg-sage-soft py-24">
+      <div className="px-6 max-w-2xl mx-auto">
       <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8 text-center">
         Частые вопросы
       </h2>
@@ -128,6 +129,7 @@ export function FAQ() {
           onToggle={() => toggle(i)}
         />
       ))}
+      </div>
     </section>
   )
 }

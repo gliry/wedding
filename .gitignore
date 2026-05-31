@@ -35,3 +35,8 @@ public/photos/raw/*
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright
+e2e/shots/
+test-results/
+playwright-report/

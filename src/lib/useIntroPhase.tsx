@@ -65,6 +65,9 @@ export function useIntroPhase() {
  */
 export function PreloadHeroTextures() {
   useEffect(() => {
+    // Touch devices render a static photo, not the WebGL depth scene — don't
+    // waste their bandwidth preloading the depth/inpaint textures.
+    if (window.matchMedia('(pointer: coarse)').matches) return
     useTexture.preload([
       '/photos/hero/main-lg.jpg',
       '/photos/hero/main-lg-no-people.jpg',

@@ -1,13 +1,23 @@
-import { Suspense, useEffect, useMemo, useRef } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { HeroScene } from './HeroScene'
 import { useIntroPhase } from '../../lib/useIntroPhase'
 
 const CAMERA_Z = 5
 
+// Mobile hero photo — a calm "standing together" frame that crops well in
+// portrait, unlike the landscape depth-parallax shot (couple walking apart).
+const MOBILE_HERO = 'img_2304'
+
 export function Scene() {
   const { state, dispatch } = useIntroPhase()
   const wrapperRef = useRef<HTMLDivElement>(null)
+  // Touch devices get a static photo instead of the WebGL depth scene: mouse
+  // parallax never fires there anyway, the landscape shot frames badly in
+  // portrait, and dropping the render loop keeps mobile scrolling smooth.
+  const [isTouch] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+  )
 
   // Filter for waiting/dragging phases — slide leaves a small residual blur
   // (4px) and slightly damped brightness (0.92). The remaining settle to
@@ -77,16 +87,37 @@ export function Scene() {
       className="pointer-events-none fixed inset-0 -z-10"
       style={{ filter: 'blur(20px) brightness(0.55)' }}
     >
-      <Canvas
-        className="!fixed !inset-0"
-        camera={{ position: [0, 0, CAMERA_Z], fov: 45 }}
-        gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
-      >
-        <Suspense fallback={null}>
-          <HeroScene phase={state.phase} />
-        </Suspense>
-      </Canvas>
+      {isTouch ? (
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={`/photos/sections/${MOBILE_HERO}-md.avif 1200w, /photos/sections/${MOBILE_HERO}-lg.avif 1920w`}
+            sizes="100vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`/photos/sections/${MOBILE_HERO}-md.webp 1200w, /photos/sections/${MOBILE_HERO}-lg.webp 1920w`}
+            sizes="100vw"
+          />
+          <img
+            src={`/photos/sections/${MOBILE_HERO}-lg.jpg`}
+            alt=""
+            aria-hidden
+            className="h-full w-full object-cover"
+          />
+        </picture>
+      ) : (
+        <Canvas
+          className="!fixed !inset-0"
+          camera={{ position: [0, 0, CAMERA_Z], fov: 45 }}
+          gl={{ antialias: true, alpha: true }}
+          dpr={[1, 2]}
+        >
+          <Suspense fallback={null}>
+            <HeroScene phase={state.phase} />
+          </Suspense>
+        </Canvas>
+      )}
     </div>
   )
 }

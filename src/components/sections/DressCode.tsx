@@ -1,4 +1,5 @@
 import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
+import { SectionPhoto } from '../ui/SectionPhoto'
 
 const MESSAGES = [
   'Отличный выбор!',
@@ -110,7 +111,8 @@ export function DressCode() {
   }
 
   return (
-    <section className="px-6 py-24 max-w-2xl mx-auto text-center">
+    <section className="bg-sage-soft py-24">
+      <div className="px-6 max-w-2xl mx-auto text-center">
       <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-8">
         Дресс-код
       </h2>
@@ -119,6 +121,13 @@ export function DressCode() {
         Никакого дресс-кода нет. Приходите в том, в чём вам комфортно.
         Только не красный и не белый.
       </p>
+
+      <SectionPhoto
+        slug="img_2314"
+        alt="Ильдар и Екатерина"
+        className="mx-auto mb-10 w-full aspect-[4/3] rounded-2xl shadow-sm"
+        sizes="(max-width: 768px) 90vw, 42rem"
+      />
 
       <div
         className="relative mx-auto w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-sage/40"
@@ -152,6 +161,7 @@ export function DressCode() {
           {message}
         </p>
       )}
+      </div>
     </section>
   )
 }

@@ -12,6 +12,7 @@ export default {
         ink: '#2B2719',          // primary dark text
         'ink-muted': '#6B6455',  // secondary muted text
         // Accents — sage / olive / taupe from reference
+        'sage-soft': '#DCE0D0',  // pale sage — alternating section bands
         sage: '#8B9579',         // main accent — soft sage green
         olive: '#5E6B4B',        // deeper olive for emphasis
         taupe: '#A79177',        // warm taupe for tertiary accents
