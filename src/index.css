@@ -110,6 +110,18 @@ html.lenis {
   .dress-shimmer { animation: none; }
 }
 
+/* Cinema overlay — a static warm-light grade + faint film grain over a photo.
+   Deliberately no mix-blend-mode and no animation: either would promote the
+   layer, which then escapes the rounded arch clip and gnaws the corners. */
+.cinema-bloom {
+  background:
+    radial-gradient(45% 40% at 30% 25%, rgba(255, 206, 140, 0.42), transparent 70%),
+    radial-gradient(42% 36% at 75% 72%, rgba(255, 168, 100, 0.3), transparent 72%);
+}
+.cinema-grain {
+  opacity: 0.09;
+}
+
 @keyframes countdown-tick {
   0%   { transform: translateY(-4px) scale(1.08); opacity: 0.5; }
   60%  { transform: translateY(2px) scale(0.98); opacity: 1; }

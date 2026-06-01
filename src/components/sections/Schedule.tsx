@@ -1,7 +1,7 @@
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { useRef } from 'react'
-import { SectionPhoto } from '../ui/SectionPhoto'
+import { ArchPhoto } from '../ui/ArchPhoto'
 
 const ITEMS = [
   { time: '15:30', title: 'Сбор гостей', desc: 'Фуршет, приветственные напитки' },
@@ -57,12 +57,13 @@ export function Schedule() {
             <br className="hidden md:block" />
             дня
           </h2>
-          <SectionPhoto
+          <ArchPhoto
             slug="img_2322"
             alt="Ильдар и Екатерина"
-            className="mx-auto w-full max-w-[18rem] aspect-[2/3] rounded-t-full rounded-b-2xl border-2 border-olive shadow-sm mb-12 md:mb-0"
+            className="mx-auto w-full max-w-[18rem] aspect-[2/3] mb-12 md:mb-0"
             imgClassName="object-cover object-top"
             sizes="(max-width: 768px) 75vw, 28vw"
+            cinema
           />
         </div>
 
