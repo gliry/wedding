@@ -34,12 +34,12 @@ body {
   /* Keep real italic on LT Remark + faux-bold on <strong>, but disable
      synthetic obliquing so emoji (no italic face) render upright. */
   font-synthesis: weight;
-  /* Light base matching the (light) hero photo. iOS Safari derives its
-     top/bottom chrome colour from the body background-color (Safari 26 ignores
-     theme-color), so a light body makes the bars blend with the hero instead
-     of showing a dark band. Body-only (not html) so it propagates to the
-     canvas without covering the fixed hero at z-index -10. */
-  background: #c4caca;
+  /* Site's primary cream (same as the cream content sections / bg token). iOS
+     Safari derives its top/bottom chrome colour from the body background-color
+     (Safari 26 ignores theme-color), so this tints the bars to match the site.
+     Body-only (not html) so it propagates to the canvas without covering the
+     fixed hero at z-index -10. */
+  background: #f4eddf;
   color: #2b2719;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
