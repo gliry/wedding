@@ -24,10 +24,6 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  /* Dark page base — the only place it shows is the iOS safe-area / overscroll
-     gutters above the hero and below the finale, both of which are dark
-     photos, so the edges read as the image bleeding off-screen, not a frame. */
-  background: #1c1910;
   overscroll-behavior: none;
 }
 
@@ -38,7 +34,12 @@ body {
   /* Keep real italic on LT Remark + faux-bold on <strong>, but disable
      synthetic obliquing so emoji (no italic face) render upright. */
   font-synthesis: weight;
-  background: #1c1910;
+  /* Light base matching the (light) hero photo. iOS Safari derives its
+     top/bottom chrome colour from the body background-color (Safari 26 ignores
+     theme-color), so a light body makes the bars blend with the hero instead
+     of showing a dark band. Body-only (not html) so it propagates to the
+     canvas without covering the fixed hero at z-index -10. */
+  background: #c4caca;
   color: #2b2719;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;

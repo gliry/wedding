@@ -89,16 +89,17 @@ export function Scene() {
     >
       {isTouch ? (
         <picture>
-          {/* High-res (4000px) source — the landscape photo is cropped hard to
-              portrait, so it needs far more pixels than the viewport width to
-              stay sharp. */}
-          <source type="image/avif" srcSet={`/photos/sections/${MOBILE_HERO}-xl.avif`} />
-          <source type="image/webp" srcSet={`/photos/sections/${MOBILE_HERO}-xl.webp`} />
+          {/* Pre-cropped portrait (1440px, ~3.3MP) — small enough for iOS to
+              decode (a full 4000px AVIF rendered blank on Safari), and sharp
+              because it's already framed to portrait instead of hard-cropping
+              the landscape source in CSS. */}
+          <source type="image/avif" srcSet={`/photos/sections/${MOBILE_HERO}-hero.avif`} />
+          <source type="image/webp" srcSet={`/photos/sections/${MOBILE_HERO}-hero.webp`} />
           <img
-            src={`/photos/sections/${MOBILE_HERO}-xl.jpg`}
+            src={`/photos/sections/${MOBILE_HERO}-hero.jpg`}
             alt=""
             aria-hidden
-            className="h-full w-full object-cover object-[58%_center]"
+            className="h-full w-full object-cover object-center"
           />
         </picture>
       ) : (

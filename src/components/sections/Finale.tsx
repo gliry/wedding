@@ -103,7 +103,7 @@ export function Finale() {
           className="text-bg-warm mb-10"
           style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)' }}
         >
-          До встречи 29 августа 2026
+          До встречи 29 августа
         </h2>
 
         <Countdown variant="finale" className="mb-8" />

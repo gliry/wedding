@@ -13,7 +13,10 @@ export function SmoothScroll() {
   useEffect(() => {
     const isTouch = window.matchMedia('(pointer: coarse)').matches
     if (isTouch) {
-      ScrollTrigger.normalizeScroll(true)
+      // Native scroll on touch — do NOT normalizeScroll: it hijacks the touch
+      // scroll pipeline and stops iOS Safari from collapsing its top/bottom
+      // chrome on scroll. ignoreMobileResize keeps ScrollTrigger from
+      // re-firing when the chrome hide/show resizes the viewport.
       ScrollTrigger.config({ ignoreMobileResize: true })
       return
     }
