@@ -51,12 +51,13 @@ function ContentLayer() {
             are punctuated by full-bleed photo breaks for colour play. */}
         <Address />
         <WhenWhere />
-        {/* Portrait photo break on mobile, landscape on desktop. */}
+        {/* Portrait photo break on mobile, landscape on desktop. Cinematic
+            pin & zoom: tall sticky section, image scrubs 1.5→1.0. No caption. */}
         <div className="md:hidden">
-          <PhotoBreak slug="img_2324" />
+          <PhotoBreak slug="img_2324" pinZoom zoomFrom={2.6} zoomOutAt={0.6} />
         </div>
         <div className="hidden md:block">
-          <PhotoBreak slug="img_2318" />
+          <PhotoBreak slug="img_2318" pinZoom />
         </div>
         <Schedule />
         <DressCode />
