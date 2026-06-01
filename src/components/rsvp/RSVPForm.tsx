@@ -16,9 +16,20 @@ interface Props {
   onSubmitted: (variant: ThanksVariant) => void
 }
 
+let guestSeq = 0
+// `crypto.randomUUID` only exists in secure contexts (HTTPS / localhost), so it
+// is undefined when the site is opened over plain HTTP on a LAN IP. Fall back to
+// a non-crypto id — it only needs to be unique within the form.
+function makeGuestId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+  return `guest-${Date.now().toString(36)}-${(guestSeq++).toString(36)}-${Math.random().toString(36).slice(2, 8)}`
+}
+
 function makeCompanion(): GuestData {
   return {
-    id: crypto.randomUUID(),
+    id: makeGuestId(),
     name: '',
     allergies: '',
     alcohol: [],

@@ -14,7 +14,10 @@ export function RSVP() {
         Ваш ответ
       </h2>
       <p className="text-xl md:text-2xl text-ink-muted text-center mb-10">
-        Подтвердите своё участие до 1 августа
+        Подтвердите своё участие{' '}
+        <span className="whitespace-nowrap text-olive underline decoration-olive/60 decoration-2 underline-offset-4">
+          до 1 августа
+        </span>
       </p>
 
       <SectionPhoto

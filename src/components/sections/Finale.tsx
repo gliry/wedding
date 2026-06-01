@@ -20,7 +20,9 @@ export function Finale() {
         if (reduced) {
           gsap.set(titleRef.current, { opacity: 1 })
         } else {
-          const split = new SplitText(titleRef.current, { type: 'chars' })
+          // Split into words AND chars so chars animate but words stay
+          // unbreakable — otherwise a line break can split "2026" mid-number.
+          const split = new SplitText(titleRef.current, { type: 'words,chars' })
           gsap.from(split.chars, {
             opacity: 0,
             y: 30,

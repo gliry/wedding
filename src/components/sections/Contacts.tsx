@@ -1,31 +1,28 @@
-// TODO: replace with real Telegram URLs when available.
-const TG_GROUP_URL = 'https://t.me/PLACEHOLDER-WEDDING-GROUP'
-const TG_DARINA_URL = 'https://t.me/PLACEHOLDER-DARINA'
+const TG_GROUP_URL = 'https://t.me/+prEyCpSRTlZiZTFi'
+const VK_URL = 'https://vk.me/join/EedxHDogKl65daIynSuvtwJnf7IUbFZkpH4='
+const TG_DARINA_URL = 'https://t.me/+79127474736' // Дарина, +7 912 747-47-36
 
 type Contact = {
-  emoji: string
   title: string
   desc: string
-  href?: string
+  href: string
 }
 
 const CONTACTS: Contact[] = [
   {
-    emoji: '💬',
     title: 'Telegram-группа свадьбы',
     desc: 'Для всех гостей — новости, вопросы, координация',
     href: TG_GROUP_URL,
   },
   {
-    emoji: '🎀',
+    title: 'Беседа ВКонтакте',
+    desc: 'Та же компания, если удобнее ВК',
+    href: VK_URL,
+  },
+  {
     title: 'Дарина — координатор',
     desc: 'Все вопросы в день свадьбы — к ней, не к паре',
     href: TG_DARINA_URL,
-  },
-  {
-    emoji: '💕',
-    title: 'Ильдар & Екатерина',
-    desc: 'Только для экстренных случаев',
   },
 ]
 
@@ -33,40 +30,26 @@ export function Contacts() {
   return (
     <section className="bg-bg py-16">
       <div className="px-6 max-w-3xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-10 text-center">
-        Контакты
-      </h2>
+        <h2 className="font-display text-4xl md:text-5xl font-light text-ink mb-10 text-center">
+          Контакты
+        </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {CONTACTS.map((c) => {
-          const inner = (
-            <>
-              <span className="text-2xl md:text-3xl text-ink">{c.title}</span>
-              <span className="text-xl md:text-2xl leading-relaxed text-ink-muted">
-                {c.desc}
-              </span>
-            </>
-          )
-          const base =
-            'flex h-full min-h-[180px] flex-col items-center justify-center gap-3 bg-bg-warm rounded-lg border border-ink/10 p-6 text-center'
-
-          return c.href ? (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {CONTACTS.map((c) => (
             <a
               key={c.title}
               href={c.href}
               target="_blank"
               rel="noopener"
-              className={`${base} transition duration-200 hover:border-olive/40 hover:shadow-sm`}
+              className="flex h-full min-h-[180px] flex-col items-center justify-center gap-3 bg-bg-warm rounded-lg border border-ink/10 p-6 text-center transition duration-200 hover:border-olive/40 hover:shadow-sm"
             >
-              {inner}
+              <span className="text-2xl md:text-3xl text-ink">{c.title}</span>
+              <span className="text-xl md:text-2xl leading-relaxed text-ink-muted">
+                {c.desc}
+              </span>
             </a>
-          ) : (
-            <div key={c.title} className={base}>
-              {inner}
-            </div>
-          )
-        })}
-      </div>
+          ))}
+        </div>
       </div>
     </section>
   )

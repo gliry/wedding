@@ -19,8 +19,8 @@ export default {
       },
       fontFamily: {
         sans: ['"LT Remark"'],
-        display: ['"Florisel Script"', 'cursive'],
-        script: ['"Florisel Script"', 'cursive'],
+        display: ['"Anastasia Script"', 'cursive'],
+        script: ['"Anastasia Script"', 'cursive'],
       },
     },
   },

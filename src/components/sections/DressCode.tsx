@@ -145,14 +145,14 @@ export function DressCode() {
         style={{ background: GRADIENT_CSS }}
       />
 
-      {message && (
-        <p
-          className="mt-6 text-xl md:text-2xl text-sage-soft min-h-[1.7em]"
-          aria-live="polite"
-        >
-          {message}
-        </p>
-      )}
+      {/* Always rendered with reserved height so swapping messages of
+          different lengths doesn't grow/shrink the section. */}
+      <p
+        className="mt-6 min-h-[4.5em] text-center text-xl md:text-2xl text-sage-soft"
+        aria-live="polite"
+      >
+        {message}
+      </p>
       </div>
     </section>
   )

@@ -2,11 +2,11 @@
    Until they exist the @font-face rules silently fall through to the
    system italic / cursive fallbacks declared in tailwind.config.js. */
 @font-face {
-  font-family: 'Florisel Script';
+  font-family: 'Anastasia Script';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/Floriselscript.ttf') format('truetype');
+  src: url('/fonts/anastasiascript.woff') format('woff');
 }
 
 
@@ -24,6 +24,11 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Dark page base — the only place it shows is the iOS safe-area / overscroll
+     gutters above the hero and below the finale, both of which are dark
+     photos, so the edges read as the image bleeding off-screen, not a frame. */
+  background: #1c1910;
+  overscroll-behavior: none;
 }
 
 body {
@@ -33,12 +38,10 @@ body {
   /* Keep real italic on LT Remark + faux-bold on <strong>, but disable
      synthetic obliquing so emoji (no italic face) render upright. */
   font-synthesis: weight;
-  /* Olive base fill so sub-pixel seams between the olive blocks never flash
-     the cream page colour. Content sections paint their own bg over this. */
-  background: #5e6b4b;
+  background: #1c1910;
   color: #2b2719;
   -webkit-font-smoothing: antialiased;
-  overscroll-behavior-y: none;
+  overscroll-behavior: none;
 }
 
 * {
