@@ -128,7 +128,7 @@ export function ThumbTrack({
       {/* Label above the track */}
       <span
         aria-hidden
-        className="font-sans text-xs uppercase tracking-[0.25em] text-bg/75 transition-opacity duration-300"
+        className="font-ui text-xs uppercase tracking-[0.25em] text-bg/75 transition-opacity duration-300"
         style={{ opacity: 1 - progress }}
       >
         {label}

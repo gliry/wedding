@@ -89,17 +89,25 @@ export function Scene() {
     >
       {isTouch ? (
         <picture>
-          {/* Pre-cropped portrait (1440px, ~3.3MP) — small enough for iOS to
-              decode (a full 4000px AVIF rendered blank on Safari), and sharp
-              because it's already framed to portrait instead of hard-cropping
-              the landscape source in CSS. */}
-          <source type="image/avif" srcSet={`/photos/sections/${MOBILE_HERO}-hero.avif`} />
-          <source type="image/webp" srcSet={`/photos/sections/${MOBILE_HERO}-hero.webp`} />
+          {/* Wider framing: the full landscape frame (1456px, safe for iOS to
+              decode) shown cover on a portrait screen reveals the whole height
+              — airy sky on top, couple lower, beach at the bottom — instead of
+              the tight pre-cropped portrait. object-position keeps the couple
+              (centre-right of the frame) in view. */}
+          <source type="image/avif" srcSet={`/photos/sections/${MOBILE_HERO}-lg.avif`} />
+          <source type="image/webp" srcSet={`/photos/sections/${MOBILE_HERO}-lg.webp`} />
           <img
-            src={`/photos/sections/${MOBILE_HERO}-hero.jpg`}
+            src={`/photos/sections/${MOBILE_HERO}-lg.jpg`}
             alt=""
             aria-hidden
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover"
+            style={{
+              // Keep the full couple in frame (left part of the image) while
+              // they still read toward the right side.
+              objectPosition: '52% 50%',
+              // Moody editorial grade (F8 family, V5) — richer saturation.
+              filter: 'brightness(0.86) contrast(1.12) saturate(1.25)',
+            }}
           />
         </picture>
       ) : (

@@ -2,6 +2,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { useRef } from 'react'
 import { ThumbTrack } from './ThumbTrack'
+import { HeroNames } from '../sections/HeroNames'
 import { useIntroPhase } from '../../lib/useIntroPhase'
 
 /**
@@ -85,9 +86,15 @@ export function IntroLockscreen() {
       {/* Content — names + thumb. Pointer events re-enabled here so the thumb
           is interactive while the rest of the overlay is click-through. */}
       <div className="pointer-events-auto relative flex h-full flex-col items-center justify-between px-6 pb-8 pt-[8vh] md:pt-[18vh] text-center">
-        <div ref={namesRef}>
+        <div ref={namesRef} className="w-full">
+          {/* Mobile: identical block & position to the hero (cream tone — the
+              hero itself is white; the intro keeps the previous colour). */}
+          <div className="md:hidden">
+            <HeroNames color="#F4EDDF" />
+          </div>
+          {/* Desktop: original script names with drag-progress shadow. */}
           <h1
-            className="font-script font-light leading-[1.25] text-bg"
+            className="hidden md:block font-script font-light leading-[1.25] text-bg"
             style={{
               fontSize: 'clamp(3.5rem, 12.6vw, 7rem)',
               textShadow: `0 2px 10px rgba(0,0,0,${0.78 * state.progress}), 0 4px 28px rgba(0,0,0,${0.6 * state.progress}), 0 0 4px rgba(0,0,0,${0.85 * state.progress})`,

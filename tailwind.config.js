@@ -21,6 +21,7 @@ export default {
         sans: ['"LT Remark"'],
         display: ['"Anastasia Script"', 'cursive'],
         script: ['"Anastasia Script"', 'cursive'],
+        serif: ['"Cormorant Garamond"', 'serif'],
       },
     },
   },
