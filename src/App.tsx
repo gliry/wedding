@@ -11,8 +11,6 @@ import { FAQ } from './components/sections/FAQ'
 import { Contacts } from './components/sections/Contacts'
 import { Finale } from './components/sections/Finale'
 import { PhotoBreak } from './components/sections/PhotoBreak'
-import { SaluteBreak } from './components/sections/SaluteBreak'
-import { HeartsBreak } from './components/sections/HeartsBreak'
 import { FilmGrain } from './components/effects/FilmGrain'
 import { IntroLockscreen } from './components/intro/IntroLockscreen'
 import {
@@ -62,12 +60,8 @@ function ContentLayer() {
           <PhotoBreak slug="img_2318" pinZoom />
         </div>
         <Schedule />
-        {/* Interactive break — shake/cursor → confetti salute. */}
-        <SaluteBreak />
         <DressCode />
         <RSVP />
-        {/* Interactive break — tap/click → hearts. */}
-        <HeartsBreak />
         <FAQ />
         <Contacts />
         <Finale />
