@@ -68,7 +68,10 @@ export function Finale() {
   )
 
   return (
-    <section ref={ref} className="relative cursor-pointer overflow-hidden py-20 text-center">
+    <section
+      ref={ref}
+      className="relative cursor-pointer overflow-hidden py-20 text-center md:flex md:min-h-[88vh] md:flex-col md:justify-center md:py-24"
+    >
       <SectionPhoto
         slug="img_2307"
         alt=""
@@ -96,7 +99,7 @@ export function Finale() {
         <Countdown variant="finale" className="mb-8" />
 
         <p className="text-2xl">💍</p>
-        <p className="mt-4 font-ui text-[0.7rem] uppercase tracking-[0.25em] text-bg-warm/70 animate-pulse">
+        <p className="mt-4 font-ui text-[0.7rem] uppercase tracking-[0.25em] text-bg-warm/70">
           {isTouch ? 'коснитесь экрана ♡' : 'кликните ♡'}
         </p>
       </div>

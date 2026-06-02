@@ -3,12 +3,19 @@ import { gsap } from 'gsap'
 import { useRef } from 'react'
 import { ArchPhoto } from '../ui/ArchPhoto'
 
-const ITEMS = [
+type ScheduleItem = { time: string; title: string; desc: string; note?: string }
+
+const ITEMS: ScheduleItem[] = [
   { time: '15:30', title: 'Сбор гостей', desc: 'Фуршет, приветственные напитки' },
   { time: '16:00', title: 'Выездная церемония', desc: 'На газоне — захватите удобную обувь' },
   { time: '16:30', title: 'Фото с гостями', desc: 'Обнимашки, групповые кадры' },
   { time: '17:00', title: 'Банкет', desc: 'Ужин, тосты, танцы' },
-  { time: '23:00', title: 'Afterparty', desc: 'Бассейн, баня, отдых на территории' },
+  {
+    time: '23:00',
+    title: 'Afterparty',
+    desc: 'Бассейн, баня, отдых на территории',
+    note: 'Захватите купальник/плавки',
+  },
   { time: '30.08', title: 'Второй день', desc: 'Детали позже' },
 ]
 
@@ -82,6 +89,11 @@ export function Schedule() {
               </p>
               <h3 className="text-xl md:text-2xl text-ink mb-1">{item.title}</h3>
               <p className="text-xl md:text-2xl text-ink-muted">{item.desc}</p>
+              {item.note && (
+                <p className="mt-3 inline-block rounded-xl bg-sage-soft px-4 py-2 text-lg md:text-xl text-olive">
+                  {item.note}
+                </p>
+              )}
             </li>
           ))}
         </ol>

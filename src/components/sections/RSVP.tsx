@@ -15,7 +15,7 @@ export function RSVP() {
       </h2>
       <p className="text-xl md:text-2xl text-ink-muted text-center mb-10">
         Подтвердите своё участие{' '}
-        <span className="whitespace-nowrap text-olive underline decoration-olive/60 decoration-2 underline-offset-4">
+        <span className="whitespace-nowrap rounded-lg bg-sage-soft px-3 py-1 text-olive">
           до 1 августа
         </span>
       </p>
