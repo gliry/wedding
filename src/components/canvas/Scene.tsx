@@ -84,7 +84,11 @@ export function Scene() {
   return (
     <div
       ref={wrapperRef}
-      className="pointer-events-none fixed inset-0 -z-10"
+      // Stable large-viewport height (h-screen = 100vh) instead of inset-0:
+      // on iOS the fixed `bottom:0` tracks the collapsing URL bar, which
+      // resizes the element and makes the cover image "jump" between two zoom
+      // levels as you scroll up/down. A fixed height keeps the photo steady.
+      className="pointer-events-none fixed left-0 top-0 w-full h-screen -z-10"
       style={{ filter: 'blur(20px) brightness(0.55)' }}
     >
       {isTouch ? (

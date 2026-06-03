@@ -48,6 +48,9 @@ function FAQItem({
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       if (reduced) {
         contentRef.current.style.height = isOpen ? 'auto' : '0px'
+        // Expanded state must not clip the italic glyph overhang (e.g. the
+        // left leg of "Д"); only collapse with overflow hidden.
+        contentRef.current.style.overflow = isOpen ? 'visible' : 'hidden'
         contentRef.current.style.transform = ''
         return
       }
@@ -62,9 +65,15 @@ function FAQItem({
             duration: 0.4,
             ease: 'power2.out',
             transformOrigin: 'top center',
+            onComplete: () => {
+              // Stop clipping once open so italic glyph overhang isn't cut.
+              if (contentRef.current) contentRef.current.style.overflow = 'visible'
+            },
           }
         )
       } else {
+        // Re-clip before collapsing the height.
+        contentRef.current.style.overflow = 'hidden'
         gsap.to(contentRef.current, {
           rotateX: -90,
           height: 0,

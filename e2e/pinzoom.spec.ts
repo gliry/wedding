@@ -15,8 +15,8 @@ test('pinzoom section renders and content past it stays reachable', async ({ pag
     await page.waitForTimeout(2400)
   }
 
-  // Tall sticky pin&zoom section is present in the DOM.
-  expect(await page.locator('section.h-\\[260vh\\]').count()).toBeGreaterThan(0)
+  // A tall sticky pin&zoom section is present (height set via inline style).
+  expect(await page.locator('section[style*="vh"]').count()).toBeGreaterThan(0)
 
   // Scrolling through it still reaches the Schedule section below.
   const schedule = page.getByText('Программа', { exact: false }).first()

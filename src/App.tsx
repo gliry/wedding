@@ -54,7 +54,9 @@ function ContentLayer() {
         {/* Portrait photo break on mobile, landscape on desktop. Cinematic
             pin & zoom: tall sticky section, image scrubs 1.5→1.0. No caption. */}
         <div className="md:hidden">
-          <PhotoBreak slug="img_2324" pinZoom zoomFrom={2.6} zoomOutAt={0.6} />
+          {/* Continuous zoom over a shorter section — no dead "hold" tail
+              before the Schedule slides up. */}
+          <PhotoBreak slug="img_2324" pinZoom zoomFrom={2.6} heightVh={180} />
         </div>
         <div className="hidden md:block">
           <PhotoBreak slug="img_2318" pinZoom />

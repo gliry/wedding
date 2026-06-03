@@ -18,6 +18,9 @@ type PhotoBreakProps = {
   /** Fraction of the scroll (0–1) at which the image reaches scale 1.0; the
    *  remainder holds the frame. Lower = faster zoom-out. Default 1 (spans all). */
   zoomOutAt?: number
+  /** Total height of the pin&zoom section in vh. Shorter = less scroll; the
+   *  zoom spans (height − 100svh) of pinned scrolling. Default 260. */
+  heightVh?: number
 }
 
 /**
@@ -34,6 +37,7 @@ export function PhotoBreak({
   pinZoom = false,
   zoomFrom = 1.5,
   zoomOutAt = 1,
+  heightVh = 260,
 }: PhotoBreakProps) {
   const ref = useRef<HTMLElement>(null)
   const imgWrapRef = useRef<HTMLDivElement>(null)
@@ -81,7 +85,7 @@ export function PhotoBreak({
 
   if (pinZoom) {
     return (
-      <section ref={ref} className="relative h-[260vh]">
+      <section ref={ref} className="relative" style={{ height: `${heightVh}vh` }}>
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
           <div ref={imgWrapRef} className="absolute inset-0 will-change-transform">
             <SectionPhoto
