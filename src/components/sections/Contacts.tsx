@@ -11,7 +11,7 @@ type Contact = {
 const CONTACTS: Contact[] = [
   {
     title: 'Telegram-группа свадьбы',
-    desc: 'Для всех гостей — новости, вопросы, координация',
+    desc: 'Новости, вопросы и координация для всех гостей',
     href: TG_GROUP_URL,
   },
   {
@@ -20,8 +20,8 @@ const CONTACTS: Contact[] = [
     href: VK_URL,
   },
   {
-    title: 'Дарина — координатор',
-    desc: 'Все вопросы в день свадьбы — к ней, не к паре',
+    title: 'Дарина, координатор',
+    desc: 'Все вопросы в день свадьбы к ней, не к паре',
     href: TG_DARINA_URL,
   },
 ]

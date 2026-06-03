@@ -182,7 +182,7 @@ export function RSVPForm({ onSubmitted }: Props) {
         <fieldset>
           <legend className="text-2xl md:text-3xl text-ink mb-2">Гости</legend>
           <p className="text-base md:text-lg text-ink-muted mb-4">
-            Если приходите один — пропустите добавление гостей.
+            Если приходите один, пропустите добавление гостей.
           </p>
 
           {state.guests.map((g, i) => (
@@ -210,7 +210,7 @@ export function RSVPForm({ onSubmitted }: Props) {
             </Button>
           ) : (
             <p className="mt-6 text-base md:text-lg text-ink-muted">
-              Если вас больше —{' '}
+              Если вас больше,{' '}
               <a href={TG_COUPLE_URL} target="_blank" rel="noopener" className="text-olive underline">
                 напишите нам в Telegram
               </a>
@@ -303,7 +303,7 @@ export function RSVPForm({ onSubmitted }: Props) {
 
       {submitState === 'error' && (
         <p role="alert" className="text-base md:text-lg text-red-700">
-          Не удалось отправить. Проверьте интернет и попробуйте ещё раз. Если не получится —{' '}
+          Не удалось отправить. Проверьте интернет и попробуйте ещё раз. Если не получится,{' '}
           <a href={TG_COUPLE_URL} target="_blank" rel="noopener" className="text-olive underline">
             напишите нам в Telegram
           </a>

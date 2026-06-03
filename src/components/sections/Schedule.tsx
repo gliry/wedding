@@ -7,7 +7,7 @@ type ScheduleItem = { time: string; title: string; desc: string; note?: string }
 
 const ITEMS: ScheduleItem[] = [
   { time: '15:30', title: 'Сбор гостей', desc: 'Фуршет, приветственные напитки' },
-  { time: '16:00', title: 'Выездная церемония', desc: 'На газоне — захватите удобную обувь' },
+  { time: '16:00', title: 'Выездная церемония', desc: 'На газоне, захватите удобную обувь' },
   { time: '16:30', title: 'Фото с гостями', desc: 'Обнимашки, групповые кадры' },
   { time: '17:00', title: 'Банкет', desc: 'Ужин, тосты, танцы' },
   {
